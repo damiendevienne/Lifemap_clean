@@ -49,17 +49,17 @@ sudo cp conf/000-default.conf /etc/apache2/sites-available/ #replace apache conf
 sudo service apache2 restart
 
 ##INSTALL ETE (TREE MANIPULATION) AND DEPENDENCIES 
-sudo pip install --upgrade pip
-sudo pip install --upgrade psycopg2-binary
-sudo pip install --upgrade ete3
+python2.7 -m pip install --upgrade psycopg2-binary
+python2.7 -m pip install --upgrade ete3
+
 ##configure solr
-sudo apt-get --yes install default-jre default-jdk
-cd ~/src
-wget http://mirrors.ircam.fr/pub/apache/lucene/solr/6.6.3/solr-6.6.3.tgz
-tar xvzf solr-6.6.3.tgz
-cd ~/src/solr-6.6.3
-bin/solr start
-bin/solr create -c taxo
-bin/solr create -c addi
-cp ~/src/Lifemap/OTHER/solr-config/schema.taxo.xml ~/src/solr-6.6.3/server/solr/taxo/conf/schema.xml
-cp ~/src/Lifemap/OTHER/solr-config/solrconfig.taxo.xml ~/src/solr-6.6.3/server/solr/taxo/conf/solrconfig.xml
+#sudo apt-get --yes install default-jre default-jdk
+#cd ~/src
+#wget http://mirrors.ircam.fr/pub/apache/lucene/solr/6.6.3/solr-6.6.3.tgz
+#tar xvzf solr-6.6.3.tgz
+#cd ~/src/solr-6.6.3
+#bin/solr start
+#bin/solr create -c taxo
+#bin/solr create -c addi
+#cp ~/src/Lifemap/OTHER/solr-config/schema.taxo.xml ~/src/solr-6.6.3/server/solr/taxo/conf/schema.xml
+#cp ~/src/Lifemap/OTHER/solr-config/solrconfig.taxo.xml ~/src/solr-6.6.3/server/solr/taxo/conf/solrconfig.xml
