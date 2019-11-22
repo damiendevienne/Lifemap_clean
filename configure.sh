@@ -16,7 +16,17 @@ sudo -u postgres psql -c "DROP DATABASE IF EXISTS tree;"
 sudo -u postgres psql -c "DROP USER IF EXISTS lm;"
 sudo -u postgres psql -c "CREATE USER lm WITH PASSWORD 'gvC5b78Ch9nDePjF';"
 sudo -u postgres psql -c "CREATE DATABASE tree OWNER lm ENCODING UTF8;"
+sudo -u postgres psql -d tree -c "CREATE EXTENSION postgis;"
+sudo -u postgres psql -d tree -c "ALTER TABLE geometry_columns OWNER TO lm;"
+sudo -u postgres psql -d tree -c "ALTER TABLE spatial_ref_sys OWNER TO lm;" 
 ##copy pgpass locally 
+cp conf/.pgpass ~/.pgpass
+
+##CREATE LIFEMAP FOLDERS AND COPY CONF FILES
+sudo mkdir /usr/share/fonts/lifemap
+sudo mkdir /usr/lifemap/
+sudo cp -r fonts/ /usr/lifemap/
+sudo cp -r style/ /usr/lifemap/
 
 
 ##INSTALL MOD TILE and RENDERD
@@ -29,13 +39,13 @@ git clone git://github.com/damiendevienne/mod_tile_deepzoom.git /tmp/mod_tile
 sudo ldconfig
 sudo mkdir /var/lib/mod_tile
 sudo mkdir /var/run/renderd
-sudo cp SetupServer/mod_tile.conf /etc/apache2/conf-available/mod_tile.conf
+sudo cp conf/mod_tile.conf /etc/apache2/conf-available/mod_tile.conf
 sudo a2enconf mod_tile
+sudo cp conf/renderd.conf /etc/ ## a faire avant de relancer apache2
 
 ##CONFIGURE APACHE
 sudo service apache2 reload
-sudo cp ~/src/Lifemap/SetupServer/renderd.conf /etc/ ## a faire avant de relancer apache2
-sudo cp ~/src/Lifemap/SetupServer/000-default.conf /etc/apache2/sites-available/ #replace apache config file 
+sudo cp conf/000-default.conf /etc/apache2/sites-available/ #replace apache config file 
 sudo service apache2 restart
 
 ##INSTALL ETE (TREE MANIPULATION) AND DEPENDENCIES 
