@@ -28,7 +28,7 @@ def getTheTrees():
 	#get translation of ranks
 	print "\nGetting rank names in french..."
 	RANKS = {}
-	with open("ranks.txt") as f:  
+	with open("taxo/ranks.txt") as f:  
 		for line in f:
 			rank_en = line.split("\t")[0]
 			rank_fr = line.split("\t")[1].rstrip() ##to remove \n
