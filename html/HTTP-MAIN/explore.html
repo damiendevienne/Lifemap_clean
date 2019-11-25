@@ -357,7 +357,7 @@
 	<!--HERE IS WHAT CONCERNS THE MAP AND MAP FUNCTION (focus, etc...)-->
     <script>
 		var map = L.map('map', {zoomControl: false, attributionControl: false});
-		var tolUrl='http://umr5558-treezoom.univ-lyon1.fr/osm_tiles/{z}/{x}/{y}.png';
+		var tolUrl='http://lifemap.univ-lyon1.fr/osm_tiles/{z}/{x}/{y}.png';
 		var tol = new L.TileLayer(tolUrl, {minZoom: 4, maxZoom: 42});
 		map.addLayer(tol);
 		map.setView([-5,0], 5);
@@ -512,7 +512,7 @@
 	    }  
 	    var zoomTo = function(taxid) {
 //			$("#route-details").hide();
-	  		var url = 'http://umr5558-treezoom.univ-lyon1.fr/solr/solr/taxo/select?q=taxid:"'+taxid+'"&wt=json';
+	  		var url = 'http://lifemap.univ-lyon1.fr/solr/solr/taxo/select?q=taxid:"'+taxid+'"&wt=json';
 			if (taxid === 1) {
 				if ($("#zoomTo").is(":checked")) map.flyTo(L.latLng([-4.226497,0]),7);
 				else map.setView( L.latLng([-4.226497,0]),7);
@@ -554,7 +554,7 @@
 			var lon2 = bb._northEast.lng;
 			var lat1 = bb._southWest.lat;
 			var lat2 = bb._northEast.lat;
-			var URL2 = "http://umr5558-treezoom.univ-lyon1.fr/solr/solr/taxo/select?q=*:*&fq=zoom:[0 TO " + z + "]&fq=lat:[" + lat1 + " TO " + lat2 + "]&fq=lon:[" + lon1 + " TO " + lon2 + "]&wt=json&rows=1000";
+			var URL2 = "http://lifemap.univ-lyon1.fr/solr/solr/taxo/select?q=*:*&fq=zoom:[0 TO " + z + "]&fq=lat:[" + lat1 + " TO " + lat2 + "]&fq=lon:[" + lon1 + " TO " + lon2 + "]&wt=json&rows=1000";
 			$.ajax({
 				url : URL2,
 				success : function(data) {
@@ -620,8 +620,8 @@
 		//SEARCH FUNCTIONS
 		$(function() {
 			var str;
-			var URL_PREFIX = "http://umr5558-treezoom.univ-lyon1.fr/solr/solr/taxo/suggesthandler?suggest.q=";
-			var URL_PREFIX_FINAL = "http://umr5558-treezoom.univ-lyon1.fr/solr/solr/taxo/select?q=taxid:";
+			var URL_PREFIX = "http://lifemap.univ-lyon1.fr/solr/solr/taxo/suggesthandler?suggest.q=";
+			var URL_PREFIX_FINAL = "http://lifemap.univ-lyon1.fr/solr/solr/taxo/select?q=taxid:";
 			var URL_SUFFIX = "&wt=json";
 			$("#searchinput").autocomplete({
 				source : function(request, response) {
@@ -718,8 +718,8 @@
 		});
 		$(function() {
 			var str;
-			var URL_PREFIX = "http://umr5558-treezoom.univ-lyon1.fr/solr/solr/taxo/suggesthandler?suggest.q=";
-			var URL_PREFIX_FINAL = "http://umr5558-treezoom.univ-lyon1.fr/solr/solr/taxo/select?q=taxid:";
+			var URL_PREFIX = "http://lifemap.univ-lyon1.fr/solr/solr/taxo/suggesthandler?suggest.q=";
+			var URL_PREFIX_FINAL = "http://lifemap.univ-lyon1.fr/solr/solr/taxo/select?q=taxid:";
 			var URL_SUFFIX = "&wt=json";
 			$("#searchinput2").autocomplete({
 				source : function(request, response) {
@@ -792,8 +792,8 @@
 		});
 		$(function() {
 			var str;
-			var URL_PREFIX = "http://umr5558-treezoom.univ-lyon1.fr/solr/solr/taxo/suggesthandler?suggest.q=";
-			var URL_PREFIX_FINAL = "http://umr5558-treezoom.univ-lyon1.fr/solr/solr/taxo/select?q=taxid:";
+			var URL_PREFIX = "http://lifemap.univ-lyon1.fr/solr/solr/taxo/suggesthandler?suggest.q=";
+			var URL_PREFIX_FINAL = "http://lifemap.univ-lyon1.fr/solr/solr/taxo/select?q=taxid:";
 			var URL_SUFFIX = "&wt=json";
 			$("#searchinput3").autocomplete({
 				source : function(request, response) {
@@ -888,7 +888,7 @@
 			taxidTo = taxidTo.replace(/\s+/g, '');
 			console.log(taxidFrom);
 			console.log(taxidTo);				
-			var url = 'http://umr5558-treezoom.univ-lyon1.fr/solr/solr/addi/select?q=*:*&fq=taxid:('+taxidFrom+' '+taxidTo+')&wt=json';
+			var url = 'http://lifemap.univ-lyon1.fr/solr/solr/addi/select?q=*:*&fq=taxid:('+taxidFrom+' '+taxidTo+')&wt=json';
 			$.ajax({
 			    url : url,
 			    success : function(data) {
@@ -914,7 +914,7 @@
 					routeq = route.toString().replace(/,/g,' ');
 					console.log("routeq");
 					console.log(routeq);
-					url2 = 'http://umr5558-treezoom.univ-lyon1.fr/solr/solr/taxo/select?q=*:*&fq=taxid:(' + routeq + ')&wt=json&rows=10000';
+					url2 = 'http://lifemap.univ-lyon1.fr/solr/solr/taxo/select?q=*:*&fq=taxid:(' + routeq + ')&wt=json&rows=10000';
 
 					$.ajax({
 					    url : url2,
