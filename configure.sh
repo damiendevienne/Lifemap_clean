@@ -1,5 +1,10 @@
 #! /bin/sh
 
+##CONFIG  VARIABLES
+html_version="NCBI" #can also be "MAIN"
+lang="en" #can also be fr
+server="134.158.247.35:443"
+
 ##UPDATE AND INSTALL REQUIRED PACKAGES
 sudo apt-get --yes update
 sudo apt-get --yes upgrade
@@ -21,6 +26,7 @@ sudo -u postgres psql -d tree -c "ALTER TABLE geometry_columns OWNER TO lm;"
 sudo -u postgres psql -d tree -c "ALTER TABLE spatial_ref_sys OWNER TO lm;" 
 ##copy pgpass locally 
 cp conf/.pgpass ~/.pgpass
+sudo chmod 0600 ~/.pgpass
 
 ##CREATE LIFEMAP FOLDERS AND COPY CONF FILES
 sudo mkdir /usr/share/fonts/lifemap
@@ -51,6 +57,18 @@ sudo service apache2 restart
 ##INSTALL ETE (TREE MANIPULATION) AND DEPENDENCIES 
 python2.7 -m pip install --upgrade psycopg2-binary
 python2.7 -m pip install --upgrade ete3
+
+##COPY CORRECT HTTP TO /VAR/WWW/HTML AND UPDATE HTML FILE
+if [ $html_version=="NCBI" ]; then
+	sudo cp -r html/HTTP-NCBI/* /var/www/html
+	sudo sed -i s/"lifemap.univ-lyon1.fr"/$server/g /var/www/html/index.html
+else 
+	sudo cp -r html/HTTP-MAIN/* /var/www/html
+	sudo sed _i s/"lifemap.univ-lyon1.fr"/$server/g /var/www/html/explore.html
+fi
+
+#update server adress inside html file. 
+
 
 ##configure solr
 #sudo apt-get --yes install default-jre default-jdk
