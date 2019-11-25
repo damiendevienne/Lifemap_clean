@@ -2,7 +2,7 @@
 
 ##CONFIG  VARIABLES
 html_version="NCBI" #can also be "MAIN"
-lang="en" #can also be fr
+lang="en" #can also be "fr"
 server="134.158.247.35:443"
 
 ##UPDATE AND INSTALL REQUIRED PACKAGES
@@ -67,11 +67,13 @@ else
 	sudo sed _i s/"lifemap.univ-lyon1.fr"/$server/g /var/www/html/explore.html
 fi
 
-#update server adress inside html file. 
 
-
-##configure solr
-#sudo apt-get --yes install default-jre default-jdk
+##INSTALL AND CONFIGURE SOLR
+sudo apt-get --yes install default-jre default-jdk
+wget http://www-eu.apache.org/dist/lucene/solr/8.3.0/solr-8.3.0.tgz
+tar xzf solr-8.3.0.tgz solr-8.3.0/bin/install_solr_service.sh --strip-components=2
+sudo bash ./install_solr_service.sh solr-8.3.0.tgz
+sudo su - solr -c "/opt/solr/bin/solr create -c addi -n data_driven_schema_configs"
 #cd ~/src
 #wget http://mirrors.ircam.fr/pub/apache/lucene/solr/6.6.3/solr-6.6.3.tgz
 #tar xvzf solr-6.6.3.tgz
