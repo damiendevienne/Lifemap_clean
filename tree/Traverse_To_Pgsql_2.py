@@ -146,7 +146,7 @@ def HalfCircPlusEllips(x,y,r,alpha, start, end,nsteps):
 
 ##CONNECT TO POSTGRESQL/POSTGIS DATABASE
 try:
-    conn = psycopg2.connect("dbname='tree' user='lm' host='localhost' password='0000'")
+    conn = psycopg2.connect("dbname='tree' user='lm' host='localhost'")  #password will be directly retrieved from ~/.pgpass
 except:
     print "I am unable to connect to the database"
     sys.exit(1)
