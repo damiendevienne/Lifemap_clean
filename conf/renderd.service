@@ -1,0 +1,16 @@
+[Unit]
+Description=renderd daemon for lifemap tiles 
+ 
+[Service]
+Type=simple
+ 
+ExecStart=/opt/mod_tile/renderd
+ 
+Restart=on-failure
+ 
+# Configures the time to wait before service is stopped forcefully.
+TimeoutStopSec=300
+ 
+[Install]
+WantedBy=multi-user.target
+
