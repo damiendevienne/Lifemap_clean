@@ -36,12 +36,12 @@ sudo cp -r style/ /usr/lifemap/
 
 
 ##INSTALL MOD TILE and RENDERD
-git clone git://github.com/damiendevienne/mod_tile_deepzoom.git /tmp/mod_tile
-(cd /tmp/mod_tile/ ; ./autogen.sh)
-(cd /tmp/mod_tile/ ; ./configure)
-(cd /tmp/mod_tile/ ; make)
-(cd /tmp/mod_tile/ ; sudo make install)
-(cd /tmp/mod_tile/ ; sudo make install-mod_tile)
+git clone git://github.com/damiendevienne/mod_tile_deepzoom.git /opt/mod_tile
+(cd /opt/mod_tile/ ; ./autogen.sh)
+(cd /opt/mod_tile/ ; ./configure)
+(cd /opt/mod_tile/ ; make)
+(cd /opt/mod_tile/ ; sudo make install)
+(cd /opt/mod_tile/ ; sudo make install-mod_tile)
 sudo ldconfig
 sudo mkdir /var/lib/mod_tile
 sudo mkdir /var/run/renderd
@@ -52,7 +52,9 @@ sudo cp conf/renderd.conf /etc/ ## a faire avant de relancer apache2
 ##CONFIGURE APACHE
 sudo service apache2 reload
 sudo cp conf/000-default.conf /etc/apache2/sites-available/ #replace apache config file 
+sudo a2enmod proxy http_proxy
 sudo service apache2 restart
+
 
 ##INSTALL ETE (TREE MANIPULATION) AND DEPENDENCIES 
 python2.7 -m pip install --upgrade psycopg2-binary
@@ -64,7 +66,7 @@ if [ $html_version=="NCBI" ]; then
 	sudo sed -i s/"lifemap.univ-lyon1.fr"/$server/g /var/www/html/index.html
 else 
 	sudo cp -r html/HTTP-MAIN/* /var/www/html
-	sudo sed _i s/"lifemap.univ-lyon1.fr"/$server/g /var/www/html/explore.html
+	sudo sed -i s/"lifemap.univ-lyon1.fr"/$server/g /var/www/html/explore.html
 fi
 
 
