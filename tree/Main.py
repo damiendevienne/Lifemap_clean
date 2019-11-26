@@ -21,17 +21,17 @@ os.system("mkdir genomes") ##if not exists
 print '\NCREATING DATABASE'
 print '  Doing Archaeal tree...'
 #os.system('python Traverse_To_Pgsql_2.py 1 1 --simplify False');
-os.system('python Traverse_To_Pgsql_2.py 1 1 --simplify '+args.simplify);
+os.system('python Traverse_To_Pgsql_2.py 1 1 --simplify %s --lang %s'%(ndid, args.simplify, args.lang));
 print '  ...Done'
 with open('tempndid', 'r') as f:
     ndid = f.readline()
 print '  Doing Eukaryotic tree... start at id: %s' % ndid
-os.system('python Traverse_To_Pgsql_2.py 2 %s --updatedb False --simplify False' % ndid)
+os.system('python Traverse_To_Pgsql_2.py 2 %s --updatedb False --simplify %s --lang %s'%(ndid, args.simplify, args.lang) 
 print '  ...Done'
 with open('tempndid', 'r') as f:
     ndid = f.readline()
 print '  Doing Bact tree... start at id:%s ' % ndid
-os.system('python Traverse_To_Pgsql_2.py 3 %s --updatedb False --simplify False' % ndid)
+os.system('python Traverse_To_Pgsql_2.py 3 %s --updatedb False --simplify %s --lang %s'%(ndid, args.simplify, args.lang)
 print '  ...Done'
 
 ## 2. Get additional info from NCBI
