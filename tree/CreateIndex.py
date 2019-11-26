@@ -4,7 +4,7 @@ import psycopg2 ##for postgresql connection
 
 ##CONNECT TO POSTGRESQL/POSTGIS DATABASE
 try:
-    conn = psycopg2.connect("dbname='tree' user='lm' host='localhost' password='0000'")
+    conn = psycopg2.connect("dbname='tree' user='lm' host='localhost'")
 except:
     print "I am unable to connect to the database"
 
