@@ -21,7 +21,7 @@ os.system("mkdir genomes") ##if not exists
 print '\NCREATING DATABASE'
 print '  Doing Archaeal tree...'
 #os.system('python Traverse_To_Pgsql_2.py 1 1 --simplify False');
-os.system('python Traverse_To_Pgsql_2.py 1 1 --simplify %s --lang %s'%(ndid, args.simplify, args.lang));
+os.system('python Traverse_To_Pgsql_2.py 1 1 --simplify %s --lang %s'%(args.simplify, args.lang));
 print '  ...Done'
 with open('tempndid', 'r') as f:
     ndid = f.readline()
