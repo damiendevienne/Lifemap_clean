@@ -3,7 +3,7 @@
 ##CONFIG  VARIABLES
 html_version="NCBI" #can also be "MAIN"
 lang="en" #can also be "fr"
-server="134.158.247.35"
+server="134.158.247.35" ##without http:// ; can be a named server as well (mydomain.org)
 
 ##UPDATE AND INSTALL REQUIRED PACKAGES
 sudo apt-get --yes update
@@ -36,10 +36,10 @@ sudo cp -r style/ /usr/lifemap/
 
 
 ##INSTALL MOD TILE and RENDERD
-git clone git://github.com/damiendevienne/mod_tile_deepzoom.git /opt/mod_tile
-(cd /opt/mod_tile/ ; ./autogen.sh)
-(cd /opt/mod_tile/ ; ./configure)
-(cd /opt/mod_tile/ ; make)
+sudo git clone git://github.com/damiendevienne/mod_tile_deepzoom.git /opt/mod_tile
+(cd /opt/mod_tile/ ; sudo ./autogen.sh)
+(cd /opt/mod_tile/ ; sudo ./configure)
+(cd /opt/mod_tile/ ; sudo make)
 (cd /opt/mod_tile/ ; sudo make install)
 (cd /opt/mod_tile/ ; sudo make install-mod_tile)
 sudo ldconfig
@@ -48,13 +48,17 @@ sudo mkdir /var/run/renderd
 sudo cp conf/mod_tile.conf /etc/apache2/conf-available/mod_tile.conf
 sudo a2enconf mod_tile
 sudo cp conf/renderd.conf /etc/ ## a faire avant de relancer apache2
+#create a service for renderd
+sudo cp conf/renderd.service /etc/systemd/system
+#start renderd service
+sudo systemctl start renderd
 
 ##CONFIGURE APACHE
 sudo service apache2 reload
 sudo cp conf/000-default.conf /etc/apache2/sites-available/ #replace apache config file 
-sudo a2enmod proxy http_proxy
-sudo service apache2 restart
+sudo a2enmod proxy proxy_http
 sudo sed -i s/"lifemap.univ-lyon1.fr"/$server/g /etc/apache2/sites-available/000-default.conf
+sudo service apache2 restart
 
 ##INSTALL ETE (TREE MANIPULATION) AND DEPENDENCIES 
 python2.7 -m pip install --upgrade psycopg2-binary
