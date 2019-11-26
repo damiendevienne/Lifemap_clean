@@ -44,14 +44,19 @@ sudo git clone git://github.com/damiendevienne/mod_tile_deepzoom.git /opt/mod_ti
 (cd /opt/mod_tile/ ; sudo make install-mod_tile)
 sudo ldconfig
 sudo mkdir /var/lib/mod_tile
+sudo chown www-data:www-data /var/lib/mod_tile
 sudo mkdir /var/run/renderd
 sudo cp conf/mod_tile.conf /etc/apache2/conf-available/mod_tile.conf
 sudo a2enconf mod_tile
 sudo cp conf/renderd.conf /etc/ ## a faire avant de relancer apache2
 #create a service for renderd
-sudo cp conf/renderd.service /etc/systemd/system
+sudo cp conf/renderd.init /etc/init.d/renderd
+sudo chmod a+x /etc/init.d/renderd
 #start renderd service
+sudo systemctl daemon-reload
 sudo systemctl start renderd
+sudo systemctl enable renderd
+
 
 ##CONFIGURE APACHE
 sudo service apache2 reload
@@ -81,6 +86,7 @@ tar xzf solr-8.3.0.tgz solr-8.3.0/bin/install_solr_service.sh --strip-components
 sudo bash ./install_solr_service.sh solr-8.3.0.tgz
 sudo su - solr -c "/opt/solr/bin/solr create -c addi -n data_driven_schema_configs"
 sudo su - solr -c "/opt/solr/bin/solr create -c taxo -n data_driven_schema_configs"
+!!!!TODO!!!! sudo cp conf/solrconfigfile1 /var/solr/data/taxo/
 
 
 

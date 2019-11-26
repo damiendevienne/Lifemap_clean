@@ -3,6 +3,13 @@
 import sys,os
 from argparse import ArgumentParser, FileType ##for options handling
 
+parser = ArgumentParser(description='Perform all Lifemap tree analysis cleaning previous data if any.')
+parser.add_argument('--lang', nargs='?', const='EN', default='EN', help='Language chosen. FR for french, EN (default) for english', choices=['EN','FR'])
+parser.add_argument('--simplify', nargs='?', const='True', default='False', help='Should the tree be simplified by removing environmental and unindentified species?'
+args = parser.parse_args()
+
+
+
 
 ##kill render_list (in case it is running)
 print "killing render_list"
@@ -13,7 +20,8 @@ os.system("mkdir genomes") ##if not exists
 ## 1. get the tree and update database
 print '\NCREATING DATABASE'
 print '  Doing Archaeal tree...'
-os.system('python Traverse_To_Pgsql_2.py 1 1 --simplify False');
+#os.system('python Traverse_To_Pgsql_2.py 1 1 --simplify False');
+os.system('python Traverse_To_Pgsql_2.py 1 1 --simplify '+args.simplify);
 print '  ...Done'
 with open('tempndid', 'r') as f:
     ndid = f.readline()
