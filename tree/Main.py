@@ -5,7 +5,7 @@ from argparse import ArgumentParser, FileType ##for options handling
 
 parser = ArgumentParser(description='Perform all Lifemap tree analysis cleaning previous data if any.')
 parser.add_argument('--lang', nargs='?', const='EN', default='EN', help='Language chosen. FR for french, EN (default) for english', choices=['EN','FR'])
-parser.add_argument('--simplify', nargs='?', const='True', default='False', help='Should the tree be simplified by removing environmental and unindentified species?'
+parser.add_argument('--simplify', nargs='?', const='True', default='False', help='Should the tree be simplified by removing environmental and unindentified species?', choices=['True','False'])
 args = parser.parse_args()
 
 
