@@ -69,15 +69,6 @@ sudo service apache2 restart
 python2.7 -m pip install --upgrade psycopg2-binary
 python2.7 -m pip install --upgrade ete3
 
-##COPY CORRECT HTTP TO /VAR/WWW/HTML AND UPDATE HTML FILE
-if [ $html_version=="NCBI" ]; then
-	sudo cp -r html/HTTP-NCBI/* /var/www/html
-	sudo sed -i s/"lifemap.univ-lyon1.fr"/$server/g /var/www/html/index.html
-else 
-	sudo cp -r html/HTTP-MAIN/* /var/www/html
-	sudo sed -i s/"lifemap.univ-lyon1.fr"/$server/g /var/www/html/explore.html
-fi
-
 
 ##INSTALL AND CONFIGURE SOLR
 sudo apt-get --yes install default-jre default-jdk
@@ -88,7 +79,10 @@ sudo apt-get --yes install default-jre default-jdk
 
 sudo su - solr -c "/opt/solr/bin/solr create -c addi -n data_driven_schema_configs"
 sudo su - solr -c "/opt/solr/bin/solr create -c taxo -n data_driven_schema_configs"
-!!!!TODO!!!! sudo cp conf/solrconfigfile1 /var/solr/data/taxo/
+sudo cp conf/solrconfig.xml /var/solr/data/taxo/
+sudo cp conf/schema.xml /var/solr/data/taxo
+
+sudo service solr start
 
 
 
