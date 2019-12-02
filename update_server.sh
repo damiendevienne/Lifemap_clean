@@ -33,8 +33,6 @@ fi
 
 #Exporting server address to /etc/lifemap_envir
 sudo echo "export SERVER_ADDRESS="$server > /etc/lifemap_envir
-#tell apache to look there to find new environment variables
-sudo echo -e ". /etc/lifemap_envir\n" >> /etc/apache2/envvars
 sudo service apache2 restart
 
 #Export server adress to jsvascript (needed for html pages)

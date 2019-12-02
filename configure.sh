@@ -56,6 +56,7 @@ sudo systemctl enable renderd
 sudo service apache2 reload
 sudo cp conf/000-default.conf /etc/apache2/sites-available/ #replace apache config file 
 sudo a2enmod proxy proxy_http
+sudo echo -e "#Get server adress as a variable for Lifemap apache config\n. /etc/lifemap_envir\n" >> /etc/apache2/envvars
 sudo service apache2 restart
 
 ##INSTALL ETE (TREE MANIPULATION) AND DEPENDENCIES 
