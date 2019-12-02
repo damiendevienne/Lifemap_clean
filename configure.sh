@@ -1,10 +1,5 @@
 #! /bin/sh
 
-##CONFIG  VARIABLES
-html_version="NCBI" #can also be "MAIN"
-lang="en" #can also be "fr"
-server="134.158.247.35" ##without http:// ; can be a named server as well (mydomain.org)
-
 ##UPDATE AND INSTALL REQUIRED PACKAGES
 sudo apt-get --yes update
 sudo apt-get --yes upgrade
@@ -62,7 +57,6 @@ sudo systemctl enable renderd
 sudo service apache2 reload
 sudo cp conf/000-default.conf /etc/apache2/sites-available/ #replace apache config file 
 sudo a2enmod proxy proxy_http
-sudo sed -i s/"lifemap.univ-lyon1.fr"/$server/g /etc/apache2/sites-available/000-default.conf
 sudo service apache2 restart
 
 ##INSTALL ETE (TREE MANIPULATION) AND DEPENDENCIES 
@@ -85,15 +79,3 @@ sudo cp conf/schema.xml /var/solr/data/taxo
 sudo service solr start
 
 
-
-
-
-#cd ~/src
-#wget http://mirrors.ircam.fr/pub/apache/lucene/solr/6.6.3/solr-6.6.3.tgz
-#tar xvzf solr-6.6.3.tgz
-#cd ~/src/solr-6.6.3
-#bin/solr start
-#bin/solr create -c taxo
-#bin/solr create -c addi
-#cp ~/src/Lifemap/OTHER/solr-config/schema.taxo.xml ~/src/solr-6.6.3/server/solr/taxo/conf/schema.xml
-#cp ~/src/Lifemap/OTHER/solr-config/solrconfig.taxo.xml ~/src/solr-6.6.3/server/solr/taxo/conf/solrconfig.xml
