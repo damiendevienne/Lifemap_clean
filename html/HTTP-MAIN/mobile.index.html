@@ -330,9 +330,12 @@ Lifemap also allows computing and visualizing the 'route' between two species or
 		<!--JQUERY UI HTML AUTOCOMPLETE EXTENSION-->
 		<script src="js/searchbar/jquery.ui.autocomplete.html.js"></script>
 		<!--HERE IS WHAT CONCERNS THE MAP AND MAP FUNCTION (focus, etc...)-->
+		<!-- Get ADRESS OF THE SERVER TO UPDATE URL. The variable is called ServerAddress and read from server-address.js-->
+		<script src="server-address.js" type="text/javascript"></script>
+
 		<script>
 			var map = L.map('map', {zoomControl: false, attributionControl: false});
-			var tolUrl='http://${SERVER_ADDRESS}/osm_tiles/{z}/{x}/{y}.png';
+			var tolUrl="http://"+ServerAddress+"/osm_tiles/{z}/{x}/{y}.png";
 			var tol = new L.TileLayer(tolUrl, {minZoom: 2, maxZoom: 42});
 			map.addLayer(tol);
 			map.setView([-5,0], 4);
@@ -497,7 +500,7 @@ Lifemap also allows computing and visualizing the 'route' between two species or
 		    }  
 		    var zoomTo = function(taxid) {
 				$("#route-details").hide();
-		  		var url = 'http://${SERVER_ADDRESS}/solr/taxo/select?q=taxid:"'+taxid+'"&wt=json';
+		  		var url = "http://"+ServerAddress+"/solr/taxo/select?q=taxid:"+taxid+"&wt=json";
 				if (taxid === 1) {
 				  map.setView( L.latLng([-4.226497,0]),7);
 				}
@@ -528,7 +531,7 @@ Lifemap also allows computing and visualizing the 'route' between two species or
 				var lon2 = bb._northEast.lng;
 				var lat1 = bb._southWest.lat;
 				var lat2 = bb._northEast.lat;
-				var URL2 = "http://${SERVER_ADDRESS}/solr/taxo/select?q=*:*&fq=zoom:[0 TO " + z + "]&fq=lat:[" + lat1 + " TO " + lat2 + "]&fq=lon:[" + lon1 + " TO " + lon2 + "]&wt=json&rows=1000";
+				var URL2 = "http://"+ServerAddress+"/solr/taxo/select?q=*:*&fq=zoom:[0 TO " + z + "]&fq=lat:[" + lat1 + " TO " + lat2 + "]&fq=lon:[" + lon1 + " TO " + lon2 + "]&wt=json&rows=1000";
 				$.ajax({
 					url : URL2,
 					success : function(data) {
@@ -590,8 +593,8 @@ Lifemap also allows computing and visualizing the 'route' between two species or
 			//SEARCH FUNCTIONS
 			$(function() {
 				var str;
-				var URL_PREFIX = "http://${SERVER_ADDRESS}/solr/taxo/suggesthandler?suggest.q=";
-				var URL_PREFIX_FINAL = "http://${SERVER_ADDRESS}/solr/taxo/select?q=taxid:";
+				var URL_PREFIX = "http://"+ServerAddress+"/solr/taxo/suggesthandler?suggest.q=";
+				var URL_PREFIX_FINAL = "http://"+ServerAddress+"/solr/taxo/select?q=taxid:";
 				var URL_SUFFIX = "&wt=json";
 				$("#searchinput").autocomplete({
 					source : function(request, response) {
@@ -687,8 +690,8 @@ Lifemap also allows computing and visualizing the 'route' between two species or
 			});
 			$(function() {
 				var str;
-				var URL_PREFIX = "http://${SERVER_ADDRESS}/solr/taxo/suggesthandler?suggest.q=";
-				var URL_PREFIX_FINAL = "http://${SERVER_ADDRESS}/solr/taxo/select?q=taxid:";
+				var URL_PREFIX = "http://"+ServerAddress+"/solr/taxo/suggesthandler?suggest.q=";
+				var URL_PREFIX_FINAL = "http://"+ServerAddress+"/solr/taxo/select?q=taxid:";
 				var URL_SUFFIX = "&wt=json";
 				$("#searchinput2").autocomplete({
 					source : function(request, response) {
@@ -761,8 +764,8 @@ Lifemap also allows computing and visualizing the 'route' between two species or
 			});
 			$(function() {
 				var str;
-				var URL_PREFIX = "http://${SERVER_ADDRESS}/solr/taxo/suggesthandler?suggest.q=";
-				var URL_PREFIX_FINAL = "http://${SERVER_ADDRESS}/solr/taxo/select?q=taxid:";
+				var URL_PREFIX = "http://"+ServerAddress+"/solr/taxo/suggesthandler?suggest.q=";
+				var URL_PREFIX_FINAL = "http://"+ServerAddress+"/solr/taxo/select?q=taxid:";
 				var URL_SUFFIX = "&wt=json";
 				$("#searchinput3").autocomplete({
 					source : function(request, response) {
@@ -857,7 +860,7 @@ Lifemap also allows computing and visualizing the 'route' between two species or
 				taxidTo = taxidTo.replace(/\s+/g, '');
 				console.log(taxidFrom);
 				console.log(taxidTo);				
-				var url = 'http://${SERVER_ADDRESS}/solr/addi/select?q=*:*&fq=taxid:('+taxidFrom+' '+taxidTo+')&wt=json';
+				var url = "http://"+ServerAddress+"/solr/addi/select?q=*:*&fq=taxid:('+taxidFrom+' '+taxidTo+')&wt=json";
 				$.ajax({
 				    url : url,
 				    success : function(data) {
@@ -883,7 +886,7 @@ Lifemap also allows computing and visualizing the 'route' between two species or
 						routeq = route.toString().replace(/,/g,' ');
 						console.log("routeq");
 						console.log(routeq);
-						url2 = 'http://${SERVER_ADDRESS}/solr/taxo/select?q=*:*&fq=taxid:(' + routeq + ')&wt=json&rows=10000';
+						url2 = "http://"+ServerAddress+"/solr/taxo/select?q=*:*&fq=taxid:(" + routeq + ")&wt=json&rows=10000";
 
 						$.ajax({
 						    url : url2,
