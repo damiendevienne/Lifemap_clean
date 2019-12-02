@@ -6,7 +6,7 @@ where:
     -h  show this help text
     -s  server to use. (default: ip adress of the machine on the web)"
 
-server="default.default"
+server=""
 while getopts ':hs:' option; do
   case "$option" in
     h) echo "$usage"
@@ -26,27 +26,18 @@ while getopts ':hs:' option; do
 done
 shift $((OPTIND - 1))
 
-
-#html_version="NCBI" #can also be "MAIN"
-#lang="en" #can also be "fr"
-#server="default.default" ##IP address of domain. without http. If not specified, IP adress is retrieved from with command ifconfig.me 
-
-if [ $server=="default.default" ]; then
+if [ -z "$server" ]; then
         echo "Getting IP adress of machine..."
 	server=$(curl ifconfig.me)
 fi
-echo "Exporting server address to /etc/lifemap_envir"
+
+#Exporting server address to /etc/lifemap_envir
 sudo echo "export SERVER_ADDRESS="$server > /etc/lifemap_envir
-echo "Restarting apache"
+#tell apache to look there to find new environment variables
+sudo echo -e ". /etc/lifemap_envir\n" >> /etc/apache2/envvars
 sudo service apache2 restart
 
-##COPY CORRECT HTTP TO /VAR/WWW/HTML AND UPDATE HTML FILE with server name
-if [ $html_version=="NCBI" ]; then
-        sudo cp -r html/HTTP-NCBI/* /var/www/html
-        sudo sed -i s/"lifemap.univ-lyon1.fr"/$server/g /var/www/html/index.html
-else 
-        sudo cp -r html/HTTP-MAIN/* /var/www/html
-        sudo sed -i s/"lifemap.univ-lyon1.fr"/$server/g /var/www/html/explore.html
-fi
+#Export server adress to jsvascript (needed for html pages)
+sudo echo "ServerAdress="$server > /var/www/html/server-address.js
 
 

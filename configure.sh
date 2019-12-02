@@ -52,7 +52,6 @@ sudo systemctl daemon-reload
 sudo systemctl start renderd
 sudo systemctl enable renderd
 
-
 ##CONFIGURE APACHE
 sudo service apache2 reload
 sudo cp conf/000-default.conf /etc/apache2/sites-available/ #replace apache config file 
@@ -62,7 +61,6 @@ sudo service apache2 restart
 ##INSTALL ETE (TREE MANIPULATION) AND DEPENDENCIES 
 python2.7 -m pip install --upgrade psycopg2-binary
 python2.7 -m pip install --upgrade ete3
-
 
 ##INSTALL AND CONFIGURE SOLR
 sudo apt-get --yes install default-jre default-jdk
@@ -78,4 +76,9 @@ sudo cp conf/schema.xml /var/solr/data/taxo
 
 sudo service solr start
 
+
+##CONFIGURE SERVER
+#edit /etc/apache2/envvars to read server_adress from external file as an environment variable
+sudo echo -e ". /etc/lifemap_envir\n" >> /etc/apache2/envvars
+sudo ./update_server.sh
 
