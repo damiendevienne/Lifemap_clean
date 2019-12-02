@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - 8
+  - 9
+  - 10
+before_install:
+  - rvm install 2.5.1
+  - gem install bundler
+install:
+  - npm run install-deps
+script:
+  - npm run eslint
+  - npm run scsslint
+  - npm test
+  - npm run build
