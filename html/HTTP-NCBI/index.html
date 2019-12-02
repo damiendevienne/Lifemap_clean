@@ -447,7 +447,7 @@
 
     <script>
 		var map = L.map('map', {zoomControl: false, attributionControl: false});
-		var tolUrl='http://lifemap-ncbi.univ-lyon1.fr/osm_tiles/{z}/{x}/{y}.png';
+		var tolUrl="http://${SERVER_ADDRESS}/osm_tiles/{z}/{x}/{y}.png";
 		var tol = new L.TileLayer(tolUrl, {minZoom: 4, maxZoom: 42});
 		map.addLayer(tol);
 		map.setView([-5,0], 5);
@@ -642,7 +642,7 @@
 				}
 			}
 			//this lists all required taxid, each once only. From those we will get lat/lon coordinates
-			var URL_PREFIX_FINAL = "http://lifemap-ncbi.univ-lyon1.fr:8983/solr/taxo/select?q=taxid:(";
+			var URL_PREFIX_FINAL = "http://${SERVER_ADDRESS}/solr/taxo/select?q=taxid:(";
 			var URL_SUFFIX = ")&wt=json&rows=10000";
 			var URL = URL_PREFIX_FINAL + alreadymet.join(' ') + URL_SUFFIX;
 			$.ajax({
@@ -718,16 +718,19 @@
 	    	newmultiA[0].length = newmultiA[0].indexOf(theRoot)+1
 
 	    	// //IF reducte==true
+		console.log(newmultiA)
 	    	// // we remove nodes present only once (singletons) by traversing and removing them.
 	    	if (reduce) {
 		    	for (i=0; i<newmultiA.length; i++) {
 		    		br = newmultiA[i]
+				console.log(br)
 		    		for (j=br.length-1; j>=0; j--) { //starts at one because we want to keep the tips!
 		    			//console.log(br[j])
 		    			if (DictCount[br[j]] == 1) {
 		    				br.splice(br.indexOf(br[j]), 1)
 		    			}
 		    		}
+				console.log(br)
 		    	}
 		    }
 
@@ -780,6 +783,7 @@
 		        node = treeobj.thetree[i];
 		        if (node.parentid !== "root") {
 		            // if you have dangling branches check that map[node.parentId] exists
+				console.log(treeobj);
 		            treeobj.thetree[map[node.parentid]].children.push(node);
 		        } else {
 		            roots.push(node);
@@ -832,7 +836,7 @@
 
 	    var zoomTo = function(taxid) {
 //			$("#route-details").hide();
-	  		var url = 'http://lifemap-ncbi.univ-lyon1.fr:8983/solr/taxo/select?q=taxid:"'+taxid+'"&wt=json';
+	  		var url = "http://${SERVER_ADDRESS}/solr/taxo/select?q=taxid:"+taxid+"&wt=json&rows=1000";
 			if (taxid === 1) {
 			  map.setView( L.latLng([-4.226497,0]),7);
 			}
@@ -876,6 +880,7 @@
 				if(multiTaxid.length==1) {alert("Only one (unique) taxid given. Cannot perform the requested action. Please use the top panel")}
 				else {
 					multiTaxid=multiTaxid.join(' ');
+					console.log(multiTaxid);
 					allRoutes(multiTaxid).then(function(resu) {
 						if (resu.length==0) {alert("No taxid was find on the database")}
 						if (resu.length==1) {alert("Only 1 valid taxid found on the databse. Please use the top panel")}
@@ -888,9 +893,10 @@
 								}
 								getmultiRoute(RESUROUTES, action);
 								RESUFINAL = RESUFINAL.join(' ')
-								var URL_PREFIX_FINAL = "http://lifemap-ncbi.univ-lyon1.fr:8983/solr/taxo/select?q=taxid:(";
-								var URL_SUFFIX = ")&wt=json";
+								var URL_PREFIX_FINAL = "http://${SERVER_ADDRESS}/solr/taxo/select?q=taxid:(";
+								var URL_SUFFIX = ")&wt=json&rows=1000";
 								var URL = URL_PREFIX_FINAL + RESUFINAL + URL_SUFFIX;
+								console.log(URL)
 								$.ajax({
 									url : URL,
 									success : function(data) {
@@ -901,6 +907,7 @@
 										markersMultiTaxid = new L.FeatureGroup()
 										var docs = JSON.stringify(data.response.docs);
 										var jsonData = JSON.parse(docs);
+										console.log(jsonData);
 //										map.setView(jsonData[0].coordinates, jsonData[0].zoom-1);		    
 										for (i=0;i<jsonData.length;i++) {
 											mm1 = new L.marker(jsonData[i].coordinates, {icon: pin1})
@@ -942,7 +949,7 @@
 			var lon2 = bb._northEast.lng;
 			var lat1 = bb._southWest.lat;
 			var lat2 = bb._northEast.lat;
-			var URL2 = "http://lifemap-ncbi.univ-lyon1.fr:8983/solr/taxo/select?q=*:*&fq=zoom:[0 TO " + z + "]&fq=lat:[" + lat1 + " TO " + lat2 + "]&fq=lon:[" + lon1 + " TO " + lon2 + "]&wt=json&rows=1000";
+			var URL2 = "http://${SERVER_ADDRESS}/solr/taxo/select?q=*:*&fq=zoom:[0 TO " + z + "]&fq=lat:[" + lat1 + " TO " + lat2 + "]&fq=lon:[" + lon1 + " TO " + lon2 + "]&wt=json&rows=1000";
 			$.ajax({
 				url : URL2,
 				success : function(data) {
@@ -1019,8 +1026,8 @@
 		//SEARCH FUNCTIONS
 		$(function() {
 			var str;
-			var URL_PREFIX = "http://lifemap-ncbi.univ-lyon1.fr:8983/solr/taxo/suggesthandler?suggest.q=";
-			var URL_PREFIX_FINAL = "http://lifemap-ncbi.univ-lyon1.fr:8983/solr/taxo/select?q=taxid:";
+			var URL_PREFIX = "http://${SERVER_ADDRESS}/solr/taxo/suggesthandler?suggest.q=";
+			var URL_PREFIX_FINAL = "http://${SERVER_ADDRESS}/solr/taxo/select?q=taxid:";
 			var URL_SUFFIX = "&wt=json";
 			$("#searchinput").autocomplete({
 				source : function(request, response) {
@@ -1121,8 +1128,8 @@
 		});
 		$(function() {
 			var str;
-			var URL_PREFIX = "http://lifemap-ncbi.univ-lyon1.fr:8983/solr/taxo/suggesthandler?suggest.q=";
-			var URL_PREFIX_FINAL = "http://lifemap-ncbi.univ-lyon1.fr:8983/solr/taxo/select?q=taxid:";
+			var URL_PREFIX = "http://${SERVER_ADDRESS}/solr/taxo/suggesthandler?suggest.q=";
+			var URL_PREFIX_FINAL = "http://${SERVER_ADDRESS}/solr/taxo/select?q=taxid:";
 			var URL_SUFFIX = "&wt=json";
 			$("#searchinput2").autocomplete({
 				source : function(request, response) {
@@ -1195,8 +1202,8 @@
 		});
 		$(function() {
 			var str;
-			var URL_PREFIX = "http://lifemap-ncbi.univ-lyon1.fr:8983/solr/taxo/suggesthandler?suggest.q=";
-			var URL_PREFIX_FINAL = "http://lifemap-ncbi.univ-lyon1.fr:8983/solr/taxo/select?q=taxid:";
+			var URL_PREFIX = "http://${SERVER_ADDRESS}/solr/taxo/suggesthandler?suggest.q=";
+			var URL_PREFIX_FINAL = "http://${SERVER_ADDRESS}/solr/taxo/select?q=taxid:";
 			var URL_SUFFIX = "&wt=json";
 			$("#searchinput3").autocomplete({
 				source : function(request, response) {
@@ -1288,7 +1295,7 @@
 
 		function allRoutes(multiTaxid) {
 			return new Promise(function (resolve, reject) {
-				var url = 'http://lifemap-ncbi.univ-lyon1.fr:8983/solr/addi/select?q=*:*&fq=taxid:('+multiTaxid+')&wt=json';
+				var url = "http://${SERVER_ADDRESS}/solr/addi/select?q=*:*&fq=taxid:("+multiTaxid+")&wt=json&rows=1000";
 				$.ajax({
 				    url : url,
 				    success : function(data) {
@@ -1306,7 +1313,7 @@
 			//get infos
 			taxidFrom = taxidFrom.replace(/\s+/g, '');
 			taxidTo = taxidTo.replace(/\s+/g, '');
-			var url = 'http://lifemap-ncbi.univ-lyon1.fr:8983/solr/addi/select?q=*:*&fq=taxid:('+taxidFrom+' '+taxidTo+')&wt=json';
+			var url = "http://${SERVER_ADDRESS}/solr/addi/select?q=*:*&fq=taxid:("+taxidFrom+" "+taxidTo+")&wt=json&rows=1000";
 			$.ajax({
 			    url : url,
 			    success : function(data) {
@@ -1327,7 +1334,7 @@
 					}
 					var mrca = getMrca(asc1,asc2);
 					routeq = route.toString().replace(/,/g,' ');
-					url2 = 'http://lifemap-ncbi.univ-lyon1.fr:8983/solr/taxo/select?q=*:*&fq=taxid:(' + routeq + ')&wt=json&rows=10000';
+					url2 = "http://${SERVER_ADDRESS}/solr/taxo/select?q=*:*&fq=taxid:(" + routeq + ")&wt=json&rows=10000";
 
 					$.ajax({
 					    url : url2,
@@ -1459,10 +1466,10 @@
 	var getNbdesc = function(taxid) {
 		$("#NBDESC").empty();
 		if (taxid===1) {
-			var url = 'http://lifemap-ncbi.univ-lyon1.fr:8983/solr/taxo/select?q=taxid:(2 2157 2759)&wt=json';
+			var url = "http://${SERVER_ADDRESS}/solr/taxo/select?q=taxid:(2 2157 2759)&wt=json";
 		}
 		else {
-			var url = 'http://lifemap-ncbi.univ-lyon1.fr:8983/solr/taxo/select?q=taxid:"'+taxid+'"&wt=json';
+			var url = "http://${SERVER_ADDRESS}/solr/taxo/select?q=taxid:"+taxid+"&wt=json";
 		}
   		$.ajax({
 			url : url,
@@ -1489,7 +1496,7 @@
 		taxi = taxid;
 		spna = spname;
 		comna = comname;	
-		var treeFileAddr = 'http://lifemap-ncbi.univ-lyon1.fr/trees/' + taxid.replace(/\s+/g, '') + '.tre';
+		var treeFileAddr = "http://${SERVER_ADDRESS}/trees/" + taxid.replace(/\s+/g, '') + ".tre";
 		$('#modaltitle').empty();
 		$('#modalbody-text').empty();	
 		$('#modalbody-pict').empty();
@@ -1569,7 +1576,7 @@
 			var lon2 = bb._northEast.lng;
 			var lat1 = bb._southWest.lat;
 			var lat2 = bb._northEast.lat;
-			var URL2 = "http://lifemap-ncbi.univ-lyon1.fr:8983/solr/taxo/select?q=*:*&fq=zoom:[0 TO " + z + "]&fq=lat:[" + lat1 + " TO " + lat2 + "]&fq=lon:[" + lon1 + " TO " + lon2 + "]&wt=json&rows=1000";
+			var URL2 = "http://${SERVER_ADDRESS}/solr/taxo/select?q=*:*&fq=zoom:[0 TO " + z + "]&fq=lat:[" + lat1 + " TO " + lat2 + "]&fq=lon:[" + lon1 + " TO " + lon2 + "]&wt=json&rows=1000";
 			$.ajax({
 				url : URL2,
 				success : function(data) {
@@ -1579,7 +1586,7 @@
 					$.each(ok, function( index, value ) {
 						var latlong = new L.LatLng(ok[index].lat[0], ok[index].lon[0]);
 						var taxid = String(ok[index].taxid[0]);
-						var URL3 = 'http://lifemap-ncbi.univ-lyon1.fr:8983/solr/addi/select?q=*:*&fq=taxid:'+taxid+'&wt=json';
+						var URL3 = "http://${SERVER_ADDRESS}/solr/addi/select?q=*:*&fq=taxid:"+taxid+"&wt=json";
 						$.ajax({
 							url:URL3,
 							success : function(data2) {
