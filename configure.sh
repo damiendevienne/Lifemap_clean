@@ -20,12 +20,13 @@ sudo -u postgres psql -d tree -c "CREATE EXTENSION postgis;"
 sudo -u postgres psql -d tree -c "ALTER TABLE geometry_columns OWNER TO lm;"
 sudo -u postgres psql -d tree -c "ALTER TABLE spatial_ref_sys OWNER TO lm;" 
 ##copy pgpass locally 
-cp conf/.pgpass ~/.pgpass
-sudo chmod 0600 ~/.pgpass
+cp conf/.pgpass /root/.pgpass ##so that it is visible when executing script as root.
+sudo chmod 0600 /root/.pgpass 
 
 ##CREATE LIFEMAP FOLDERS AND COPY CONF FILES
 sudo mkdir /usr/share/fonts/lifemap
 sudo mkdir /usr/lifemap/
+sudo mkdir /usr/local/lifemap #to store tree data
 sudo cp -r fonts/ /usr/lifemap/
 sudo cp -r style/ /usr/lifemap/
 
@@ -83,3 +84,5 @@ sudo service solr start
 sudo echo -e ". /etc/lifemap_envir\n" >> /etc/apache2/envvars
 sudo ./update_server.sh
 
+##COPY LIFEMAP CODE TO DEDICATED FOLDER
+sudo cp -r tree/* /usr/local/lifemap/
