@@ -4,8 +4,6 @@
 	# import os
 	# import cPickle as pickle
 
-print "youpiiiiiiiiiiiiiii";
-
 def getTheTrees(): 
 	##DOWNLOAD taxdump and store in taxo folder
 	##DOWNLOAD TAXREF BY HAND! and put it in taxo/
@@ -32,7 +30,6 @@ def getTheTrees():
 	with open("taxo/ranks.txt") as f:  
 		for line in f:
 			rank_en = line.split("\t")[0]
-			print(line)
 			rank_fr = line.split("\t")[1].rstrip() ##to remove \n
 			RANKS[rank_en] = rank_fr
 
