@@ -30,12 +30,12 @@ print '          Addi successfully deleted\n'
 # 3. Uploading files 
 print '  (3/4) Uploading files to Solr...\n'
 for i in range(1,4):
-    uupadtesolr = "sudo su - solr -c '/opt/solr/bin/post -c taxo TreeFeatures%d.json'" % i
+    uupadtesolr = "sudo su - solr -c '/opt/solr/bin/post -c taxo /usr/local/lifemap/TreeFeatures%d.json'" % i
     os.system(uupadtesolr)
     print '          -> TreeFeatures %d successfully uploaded.' % i 
 
 for i in range(1,4):
-    uupadtesolr2 = "sudo su - solr -c '/opt/solr/bin/post -c addi ADDITIONAL.%d.json'" % i
+    uupadtesolr2 = "sudo su - solr -c '/opt/solr/bin/post -c addi /usr/local/lifemap/ADDITIONAL.%d.json'" % i
     os.system(uupadtesolr2)
     print '          -> Additions %d successfully uploaded.' % i 
 
