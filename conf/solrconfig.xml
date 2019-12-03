@@ -206,7 +206,7 @@
       <str name="indexPath">suggester_infix_dir</str>
       <str name="dictionaryImpl">DocumentDictionaryFactory</str>
       <str name="field">all-search</str>
-      <str name="suggestAnalyzerFieldType">string</str>
+      <str name="suggestAnalyzerFieldType">textSuggest</str>
       <str name="buildOnStartup">true</str>
       <str name="buildOnCommit">false</str>
     </lst>
