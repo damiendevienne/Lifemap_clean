@@ -4,6 +4,7 @@
 	# import os
 	# import cPickle as pickle
 
+print "youpiiiiiiiiiiiiiii";
 
 def getTheTrees(): 
 	##DOWNLOAD taxdump and store in taxo folder
@@ -31,6 +32,7 @@ def getTheTrees():
 	with open("taxo/ranks.txt") as f:  
 		for line in f:
 			rank_en = line.split("\t")[0]
+			print(line)
 			rank_fr = line.split("\t")[1].rstrip() ##to remove \n
 			RANKS[rank_en] = rank_fr
 
@@ -96,8 +98,8 @@ def getTheTrees():
 			if (T.has_key(dad)==False):
 				T[dad] = Tree()
 				T[dad].name = dad
-#				T[dad].rank = rank
-#				T[dad].rank_FR = RANKS[rank]
+				T[dad].rank = rank
+				T[dad].rank_FR = RANKS[rank]
 				T[dad].taxid = dad
 				T[dad].sci_name = ATTR[dad].sci_name
 				T[dad].common_name = ATTR[dad].common_name
@@ -108,7 +110,7 @@ def getTheTrees():
 				T[son] = Tree()
 				T[son].name = son
 				T[son].rank = rank
-#				T[son].rank_FR = RANKS[rank]
+				T[son].rank_FR = RANKS[rank]
 				T[son].taxid = son
 				T[son].sci_name = ATTR[son].sci_name
 				T[son].common_name = ATTR[son].common_name

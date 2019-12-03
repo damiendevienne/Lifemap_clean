@@ -1,5 +1,21 @@
 #! /bin/sh
 
+usage="$(basename "$0") [-h] -- this code entirely configures a new ubuntu 18.04 server to be ready to display Lifemap. It needs to be run as root (sudo ./configure.sh)
+where : 
+    -h  display this help message
+
+    there are no other configuration options."
+
+while getopts ':h' option; do
+  case "$option" in
+    h) echo "$usage"
+       exit
+       ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+
 ##UPDATE AND INSTALL REQUIRED PACKAGES
 sudo apt-get --yes update
 sudo apt-get --yes upgrade

@@ -28,3 +28,7 @@ suborder	sous-ordre
 genus	genre
 order	ordre
 cohort	cohorte
+subcohort	sous-cohorte
+section	section
+series	série
+subsection	sous-section
