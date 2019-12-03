@@ -36,6 +36,6 @@ sudo echo "export SERVER_ADDRESS="$server > /etc/lifemap_envir
 sudo service apache2 restart
 
 #Export server adress to jsvascript (needed for html pages)
-sudo echo "ServerAdress="$server > /var/www/html/server-address.js
+sudo echo "var ServerAddress=\"$server\"" > /var/www/html/server-address.js
 
 
