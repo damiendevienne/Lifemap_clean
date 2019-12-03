@@ -73,8 +73,9 @@ sudo apt-get --yes install default-jre default-jdk
 
 sudo su - solr -c "/opt/solr/bin/solr create -c addi -n data_driven_schema_configs"
 sudo su - solr -c "/opt/solr/bin/solr create -c taxo -n data_driven_schema_configs"
-sudo cp conf/solrconfig.xml /var/solr/data/taxo/
-sudo cp conf/schema.xml /var/solr/data/taxo
+sudo cp conf/solrconfig.xml /var/solr/data/taxo/conf/
+sudo cp conf/schema.xml /var/solr/data/taxo/conf/
+sudo rm /var/solr/data/taxo/conf/managed-schema
 
 sudo service solr start
 
