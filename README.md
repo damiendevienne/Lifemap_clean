@@ -2,7 +2,7 @@
 
 This repository allows the deployment of Lifemap on a new server (tested on Ubuntu Server 18.04). 
 You must to be sudoer to use this pipeline. 
-It is a 5-steps process: 
+It is a simple 5-steps process: 
 
 1. clone this repository locally and enter in it
 
@@ -27,6 +27,16 @@ sudo ./update_server.sh
 sudo ./make_tree.py --lang EN --simplify TRUE
 ##lang can be FR for french version. simplify tells wether the NCBI tree should be simplified beforehand by removing unidentified species. 
 ```
+
+5. Choose the version of the Lifemap page that you want (main or ncbi) and copy the corresponding folder as follows
+```bash
+sudo cp -r html/HTTP-MAIN/* /var/www/html/ ##for 'main' version
+##OR
+sudo cp -r html/HTTP-NCBI/* /var/www/html/ ##for 'ncbi' version
+```
+
+
+
 
 ---
 
