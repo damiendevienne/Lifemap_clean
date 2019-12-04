@@ -67,9 +67,9 @@ os.system('sudo rm -r /var/lib/mod_tile/default/')
 
 ##7. Get New coordinates for generating tiles
 os.system('python GetAllTilesCoord.py')
-## 7. Restarting the machine 
-print 'restart NOW'
-#os.system('sudo reboot')
+
+##8. Compute tiles for the 5 first zoom levels ON 7 THREADS
+os.system("/opt/mod_tile/render_list -a -z 0 -Z 5 -n 7")
 
 
 
