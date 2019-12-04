@@ -36,6 +36,45 @@ sudo cp -r html/HTTP-NCBI/* /var/www/html/ ##for 'ncbi' version
 ```
 
 
+# Change the style of the map or create a new map with a new style (keeping teh first one) 
+To change the style of the map, simply edit the file /usr/lifemap/style/lifemap_style.xml
+
+To create a new map on the same server with a new style:
+- create a new style file in the same directory 
+```bash
+sudo cp /usr/lifemap/style/lifemap_style.xml /usr/lifemap/style/newstyle.xml
+```
+- open and edit /etc/renderd.conf and add the following block: 
+```
+[mystyle]
+URI=/lifemap_new/
+TILEDIR=/var/lib/mod_tile
+XML=/usr/lifemap/style/lifemap_newstyle.xml
+HOST=localhost
+TILESIZE=256
+MINZOOM=0
+MAXZOOM=40
+```
+- restart renderd and apache to take changes into account
+```bash
+sudo service renderd restart
+sudo service apache2 restart
+```
+
+- finally change the url of the tiles in the html file used to explore the tree (in /var/www/html):
+`.../mod_tile/...` should be replaced (in this example) by `.../lifemap_new/...`
+
+If the file is called index.html this is easily done with sed: 
+```bash
+sudo su
+sed s/'osm_tile'/'lifemap_new'/g index.html > indexnewstyle.html
+##visit indenewstyle.html to see the changes.
+```
+
+
+
+
+
 
 
 ---

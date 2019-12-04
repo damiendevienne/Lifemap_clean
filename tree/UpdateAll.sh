@@ -1,3 +1,2 @@
 #!/bin/sh
-cd /home/lm/src/Lifemap/PIPELINE/
-python Main.py 
+(cd /usr/local/lifemap/;sudo ./Main.py)
