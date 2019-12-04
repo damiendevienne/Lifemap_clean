@@ -26,21 +26,21 @@ print '  ...Done'
 with open('tempndid', 'r') as f:
     ndid = f.readline()
 print '  Doing Eukaryotic tree... start at id: %s' % ndid
-#os.system('python Traverse_To_Pgsql_2.py 2 %s --updatedb False --simplify %s --lang %s'%(ndid, args.simplify, args.lang)) ;
+os.system('python Traverse_To_Pgsql_2.py 2 %s --updatedb False --simplify %s --lang %s'%(ndid, args.simplify, args.lang)) ;
 print '  ...Done'
 with open('tempndid', 'r') as f:
     ndid = f.readline()
 print '  Doing Bact tree... start at id:%s ' % ndid
-#os.system('python Traverse_To_Pgsql_2.py 3 %s --updatedb False --simplify %s --lang %s'%(ndid, args.simplify, args.lang));
+os.system('python Traverse_To_Pgsql_2.py 3 %s --updatedb False --simplify %s --lang %s'%(ndid, args.simplify, args.lang));
 print '  ...Done'
 
 ## 2. Get additional info from NCBI
 print '  Getting addditional Archaeal info...'
 os.system('python Additional.info.py 1')
 print '  Getting addditional Euka info...'
-#os.system('python Additional.info.py 2')
+os.system('python Additional.info.py 2')
 print '  Getting addditional Bacter info...'
-#os.system('python Additional.info.py 3')
+os.system('python Additional.info.py 3')
 print '  ...Done'
 
 ##2.1. Get FULL info from NCBI (new sept 2019)
