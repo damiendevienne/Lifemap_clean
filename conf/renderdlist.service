@@ -1,0 +1,13 @@
+[Unit]
+Description=Start the rendering of tiles for all precomputed coordinates
+
+[Service]
+Type=Simple
+ExecStart=/usr/local/lifemap/preRenderTiles.sh
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+

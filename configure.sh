@@ -64,10 +64,16 @@ sudo cp conf/renderd.conf /etc/ ## a faire avant de relancer apache2
 #create a service for renderd
 sudo cp conf/renderd.init /etc/init.d/renderd
 sudo chmod a+x /etc/init.d/renderd
+#create a service for renderdlist that allows rendering list of tiles from list of coordinates
+sudo cp conf/renderdlist.service /etc/systemd/system/
+sudo systemctl enable renderdlist
 #start renderd service
 sudo systemctl daemon-reload
 sudo systemctl start renderd
 sudo systemctl enable renderd
+
+
+
 
 ##CONFIGURE APACHE
 sudo service apache2 reload
