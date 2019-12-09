@@ -28,7 +28,7 @@ sudo ./make_tree.py --lang EN --simplify TRUE
 
 ```
 options:
-- --lang can be ENglish(the default)  or FRench. French nales of species come from the INPN taxonomic reference (https://inpn.mnhn.fr/programme/referentiel-taxonomique-taxref).
+- --lang can be ENglish(the default)  or FRench. French names of clades come from the INPN taxonomic reference (https://inpn.mnhn.fr/programme/referentiel-taxonomique-taxref) version 11.
 - --simplify (True or False) specifies whether the NCBI taxonomy should be simplified. Simplification involves removing species with termes like 'unclutured','unidentified','environmental', etc.
 
 5. Choose the version of the Lifemap page that you want (main or ncbi) and copy the corresponding folder as follows
