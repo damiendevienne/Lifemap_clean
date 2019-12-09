@@ -14,7 +14,6 @@ f.write("#!/bin/sh\nlang=\"%s\"\nsimplify=\"%s\"\n"%(args.lang, args.simplify))
 f.close()
 os.system("(cd /usr/local/lifemap/ ; sudo ./Main.py --lang %s --simplify %s)" % (args.lang,args.simplify))
 
-##start render_list service for rendering in adva,ce many tiles
-os.system("sudo systemctl start renderdlist")
+
 
 
