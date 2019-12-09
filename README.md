@@ -4,18 +4,18 @@ This repository allows the deployment of Lifemap on a new server (tested on Ubun
 You must to be sudoer to use this pipeline. 
 It is a simple 5-steps process: 
 
-1. clone this repository locally and enter in it
+1. Clone this repository locally and enter in it
 
 ```bash
 git clone https://github.com/damiendevienne/Lifemap_clean.git
 cd Lifemap_clean
 ```
-2. execute the configuration script, with sudo
+2. Execute the configuration script, with sudo
 
 ```bash
 sudo ./configure.sh
 ```
-3. update the server information. This allows apache2 and the Lifemap html script to use the correct server name and port redirections
+3. [optional] Update the server information. This allows apache2 and the Lifemap html script to use the correct server name and port redirections. This script is already exectuted by `configure.sh` thus no need to run it again if the default option is to be used.
 
 ```bash
 sudo ./update_server.sh
@@ -25,8 +25,11 @@ sudo ./update_server.sh
 
 ```bash
 sudo ./make_tree.py --lang EN --simplify TRUE
-##lang can be FR for french version. simplify tells wether the NCBI tree should be simplified beforehand by removing unidentified species. 
+
 ```
+options:
+- --lang can be ENglish(the default)  or FRench. French nales of species come from the INPN taxonomic reference (https://inpn.mnhn.fr/programme/referentiel-taxonomique-taxref).
+- --simplify (True or False) specifies whether the NCBI taxonomy should be simplified. Simplification involves removing species with termes like 'unclutured','unidentified','environmental', etc.
 
 5. Choose the version of the Lifemap page that you want (main or ncbi) and copy the corresponding folder as follows
 ```bash
@@ -36,7 +39,7 @@ sudo cp -r html/HTTP-NCBI/* /var/www/html/ ##for 'ncbi' version
 ```
 
 
-# Change the style of the map or create a new map with a new style (keeping teh first one) 
+# Change the style of the map or create a new map with a new style (keeping the first one) 
 To change the style of the map, simply edit the file /usr/lifemap/style/lifemap_style.xml
 
 To create a new map on the same server with a new style:
