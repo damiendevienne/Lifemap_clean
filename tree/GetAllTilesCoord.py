@@ -28,10 +28,17 @@ def getXYZ(fi):
 				if (key=='lon'):
 					lon = val;
 					#do stuff
-					if (int(zoom)<=16):
+					if (int(zoom)<=20):
 #						print zoom
 						xy = deg2num(float(lat), float(lon), float(zoom))
 						coo.write("%d %d %s\n" % (xy[0], xy[1],zoom))
+						if (int(zoom)>=5):
+							xy2 = deg2num(float(lat), float(lon), float(int(zoom)-1))
+							xy3 = deg2num(float(lat), float(lon), float(int(zoom)-2))
+                                                        xy4 = deg2num(float(lat), float(lon), float(int(zoom)-3))
+	                                                coo.write("%d %d %d\n" % (xy2[0], xy2[1],int(zoom)-1))
+ 	                                                coo.write("%d %d %d\n" % (xy3[0], xy3[1],int(zoom)-2))
+                                                        coo.write("%d %d %d\n" % (xy4[0], xy4[1],int(zoom)-3))
 					zoom = False
 					lat = False
 					lon = False
