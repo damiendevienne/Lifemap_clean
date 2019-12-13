@@ -24,7 +24,7 @@ sudo ./update_server.sh
 4. Download and build the tree
 
 ```bash
-sudo ./make_tree.py --lang EN --simplify TRUE
+sudo ./make_tree.py --lang EN --simplify True
 
 ```
 options:
