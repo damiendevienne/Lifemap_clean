@@ -74,6 +74,10 @@ def getTheTrees():
 			if (tid_type=="common name"):
 				cpt +=1
 				ATTR[taxid].common_name.append(tid_val)
+                        if (tid_type=="genbank common name"):
+                                cpt +=1
+                                ATTR[taxid].common_name.append(tid_val)
+
 				# if (ATTR[taxid].common_name!=""):
 				# 	ATTR[taxid].common_name = ATTR[taxid].common_name + ", " + tid_val
 				# else: 

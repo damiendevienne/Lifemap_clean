@@ -256,6 +256,8 @@ for n in t.traverse():
     #add parenthesis to the common name
     if n.common_name!='':
         n.common_name = "(" + n.common_name + ")"
+    if n.common_name_long!='':
+        n.common_name_long = "(" + n.common_name_long + ")"
     n.nbdesc = nbdesc;
     nbsons = len(child);
     angles = [];
@@ -303,7 +305,7 @@ json.write("[\n");
 def writejsonNode(node):
     sci_name = node.sci_name
     sci_name = sci_name.replace('"','\\"')
-    common_name = node.common_name
+    common_name = node.common_name_long
     common_name = common_name.replace('"','\\"')
 	##new attributes
     authority = node.authority
