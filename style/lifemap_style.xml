@@ -4694,6 +4694,7 @@
     &datasource-settings;
   </Datasource>
 </Layer>
+<!--
 <Layer name="branchesNames" status="on" srs="&osm2pgsql_projection;">
   <StyleName>branchesNames</StyleName>
   <Datasource>
@@ -4706,6 +4707,7 @@
     &datasource-settings;
   </Datasource>
 </Layer>
+-->
 <Layer name="ranknames1" status="on" srs="&osm2pgsql_projection;">
   <StyleName>ranknames1</StyleName>
   <Datasource>
