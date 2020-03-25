@@ -1,14 +1,14 @@
 /*!
- * smartbanner.js v1.10.0 <https://github.com/ain/smartbanner.js>
- * Copyright © 2018 Ain Tohvri, contributors. Licensed under GPL-3.0.
+ * smartbanner.js v1.15.0 <https://github.com/ain/smartbanner.js>
+ * Copyright © 2019 Ain Tohvri, contributors. Licensed under GPL-3.0.
  */
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -31,15 +31,9 @@ function () {
       return "expires=".concat(expireTime.toGMTString(), ";");
     }
   }, {
-    key: "getPathString",
-    value: function getPathString(path) {
-      return "path=".concat(path, ";");
-    }
-  }, {
     key: "bake",
-    value: function bake(hideTtl) {
-      var hidePath = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-      document.cookie = "smartbanner_exited=1; ".concat(hideTtl ? Bakery.getCookieExpiresString(hideTtl) : '', " ").concat(hidePath ? Bakery.getPathString(hidePath) : '');
+    value: function bake(hideTtl, hidePath) {
+      document.cookie = "smartbanner_exited=1; ".concat(hideTtl ? Bakery.getCookieExpiresString(hideTtl) : '', " path=").concat(hidePath);
     }
   }, {
     key: "unbake",
@@ -57,7 +51,7 @@ function () {
   return Bakery;
 }();
 
-exports.default = Bakery;
+exports["default"] = Bakery;
 
 },{}],2:[function(require,module,exports){
 (function (global){
@@ -66,7 +60,7 @@ exports.default = Bakery;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -111,7 +105,7 @@ function () {
   return Detector;
 }();
 
-exports.default = Detector;
+exports["default"] = Detector;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],3:[function(require,module,exports){
@@ -119,12 +113,17 @@ exports.default = Detector;
 
 var _smartbanner = _interopRequireDefault(require("./smartbanner.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var smartbanner;
 window.addEventListener('load', function () {
-  smartbanner = new _smartbanner.default();
-  smartbanner.publish();
+  smartbanner = new _smartbanner["default"]();
+
+  if (smartbanner.apiEnabled) {
+    window.smartbanner = smartbanner;
+  } else {
+    smartbanner.publish();
+  }
 });
 
 },{"./smartbanner.js":5}],4:[function(require,module,exports){
@@ -133,7 +132,7 @@ window.addEventListener('load', function () {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -168,8 +167,8 @@ function () {
     value: function parse() {
       var metas = document.getElementsByTagName('meta');
       var options = {};
-      var optionName = null;
-      Array.from(metas).forEach(function (meta) {
+      Array.apply(null, metas).forEach(function (meta) {
+        var optionName = null;
         var name = meta.getAttribute('name');
         var content = meta.getAttribute('content');
 
@@ -190,7 +189,7 @@ function () {
   return OptionParser;
 }();
 
-exports.default = OptionParser;
+exports["default"] = OptionParser;
 
 },{}],5:[function(require,module,exports){
 "use strict";
@@ -198,7 +197,7 @@ exports.default = OptionParser;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _optionparser = _interopRequireDefault(require("./optionparser.js"));
 
@@ -206,7 +205,7 @@ var _detector = _interopRequireDefault(require("./detector.js"));
 
 var _bakery = _interopRequireDefault(require("./bakery.js"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -215,6 +214,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var DEFAULT_PLATFORMS = 'android,ios';
+var DEFAULT_CLOSE_LABEL = 'Close';
 var datas = {
   originalTop: 'data-smartbanner-original-top',
   originalMarginTop: 'data-smartbanner-original-margin-top'
@@ -223,6 +223,10 @@ var datas = {
 function handleExitClick(event, self) {
   self.exit();
   event.preventDefault();
+}
+
+function handleClickout(event, self) {
+  self.clickout();
 }
 
 function handleJQueryMobilePageLoad(event) {
@@ -236,25 +240,29 @@ function addEventListeners(self) {
   closeIcon.addEventListener('click', function (event) {
     return handleExitClick(event, self);
   });
+  var button = document.querySelector('.js_smartbanner__button');
+  button.addEventListener('click', function (event) {
+    return handleClickout(event, self);
+  });
 
-  if (_detector.default.jQueryMobilePage()) {
+  if (_detector["default"].jQueryMobilePage()) {
     $(document).on('pagebeforeshow', self, handleJQueryMobilePageLoad);
   }
 }
 
 function removeEventListeners() {
-  if (_detector.default.jQueryMobilePage()) {
+  if (_detector["default"].jQueryMobilePage()) {
     $(document).off('pagebeforeshow', handleJQueryMobilePageLoad);
   }
 }
 
 function setContentPosition(value) {
-  var wrappers = _detector.default.wrapperElement();
+  var wrappers = _detector["default"].wrapperElement();
 
   for (var i = 0, l = wrappers.length, wrapper; i < l; i++) {
     wrapper = wrappers[i];
 
-    if (_detector.default.jQueryMobilePage()) {
+    if (_detector["default"].jQueryMobilePage()) {
       if (wrapper.getAttribute(datas.originalTop)) {
         continue;
       }
@@ -275,12 +283,12 @@ function setContentPosition(value) {
 }
 
 function restoreContentPosition() {
-  var wrappers = _detector.default.wrapperElement();
+  var wrappers = _detector["default"].wrapperElement();
 
   for (var i = 0, l = wrappers.length, wrapper; i < l; i++) {
     wrapper = wrappers[i];
 
-    if (_detector.default.jQueryMobilePage() && wrapper.getAttribute(datas.originalTop)) {
+    if (_detector["default"].jQueryMobilePage() && wrapper.getAttribute(datas.originalTop)) {
       wrapper.style.top = wrapper.getAttribute(datas.originalTop) + 'px';
     } else if (wrapper.getAttribute(datas.originalMarginTop)) {
       wrapper.style.marginTop = wrapper.getAttribute(datas.originalMarginTop) + 'px';
@@ -294,9 +302,9 @@ function () {
   function SmartBanner() {
     _classCallCheck(this, SmartBanner);
 
-    var parser = new _optionparser.default();
+    var parser = new _optionparser["default"]();
     this.options = parser.parse();
-    this.platform = _detector.default.platform();
+    this.platform = _detector["default"].platform();
   } // DEPRECATED. Will be removed.
 
 
@@ -307,7 +315,7 @@ function () {
         throw new Error('No options detected. Please consult documentation.');
       }
 
-      if (_bakery.default.baked) {
+      if (_bakery["default"].baked) {
         return false;
       } // User Agent was explicetely excluded by defined excludeUserAgentRegex
 
@@ -325,6 +333,8 @@ function () {
       var bannerDiv = document.createElement('div');
       document.querySelector('body').appendChild(bannerDiv);
       bannerDiv.outerHTML = this.html;
+      var event = new Event('smartbanner.view');
+      document.dispatchEvent(event);
 
       if (!this.positioningDisabled) {
         setContentPosition(this.height);
@@ -343,13 +353,21 @@ function () {
 
       var banner = document.querySelector('.js_smartbanner');
       document.querySelector('body').removeChild(banner);
+      var event = new Event('smartbanner.exit');
+      document.dispatchEvent(event);
 
-      _bakery.default.bake(this.hideTtl, this.hidePath);
+      _bakery["default"].bake(this.hideTtl, this.hidePath);
+    }
+  }, {
+    key: "clickout",
+    value: function clickout() {
+      var event = new Event('smartbanner.clickout');
+      document.dispatchEvent(event);
     }
   }, {
     key: "originalTop",
     get: function get() {
-      var wrapper = _detector.default.wrapperElement()[0];
+      var wrapper = _detector["default"].wrapperElement()[0];
 
       return parseFloat(wrapper.getAttribute(datas.originalTop));
     } // DEPRECATED. Will be removed.
@@ -357,7 +375,7 @@ function () {
   }, {
     key: "originalTopMargin",
     get: function get() {
-      var wrapper = _detector.default.wrapperElement()[0];
+      var wrapper = _detector["default"].wrapperElement()[0];
 
       return parseFloat(wrapper.getAttribute(datas.originalMarginTop));
     }
@@ -393,16 +411,24 @@ function () {
       return '#';
     }
   }, {
+    key: "closeLabel",
+    get: function get() {
+      return this.options.closeLabel !== undefined ? this.options.closeLabel : DEFAULT_CLOSE_LABEL;
+    }
+  }, {
     key: "html",
     get: function get() {
       var modifier = !this.options.customDesignModifier ? this.platform : this.options.customDesignModifier;
-      return "<div class=\"smartbanner smartbanner--".concat(modifier, " js_smartbanner\">\n      <a href=\"javascript:void();\" class=\"smartbanner__exit js_smartbanner__exit\"></a>\n      <div class=\"smartbanner__icon\" style=\"background-image: url(").concat(this.icon, ");\"></div>\n      <div class=\"smartbanner__info\">\n        <div>\n          <div class=\"smartbanner__info__title\">").concat(this.options.title, "</div>\n          <div class=\"smartbanner__info__author\">").concat(this.options.author, "</div>\n          <div class=\"smartbanner__info__price\">").concat(this.options.price).concat(this.priceSuffix, "</div>\n        </div>\n      </div>\n      <a href=\"").concat(this.buttonUrl, "\" target=\"_blank\" class=\"smartbanner__button\"><span class=\"smartbanner__button__label\">").concat(this.options.button, "</span></a>\n    </div>");
+      return "<div class=\"smartbanner smartbanner--".concat(modifier, " js_smartbanner\">\n      <a href=\"javascript:void();\" class=\"smartbanner__exit js_smartbanner__exit\" aria-label=\"").concat(this.closeLabel, "\"></a>\n      <div class=\"smartbanner__icon\" style=\"background-image: url(").concat(this.icon, ");\"></div>\n      <div class=\"smartbanner__info\">\n        <div>\n          <div class=\"smartbanner__info__title\">").concat(this.options.title, "</div>\n          <div class=\"smartbanner__info__author\">").concat(this.options.author, "</div>\n          <div class=\"smartbanner__info__price\">").concat(this.options.price).concat(this.priceSuffix, "</div>\n        </div>\n      </div>\n      <a href=\"").concat(this.buttonUrl, "\" target=\"_blank\" class=\"smartbanner__button js_smartbanner__button\" rel=\"noopener\" aria-label=\"").concat(this.options.button, "\"><span class=\"smartbanner__button__label\">").concat(this.options.button, "</span></a>\n    </div>");
     }
   }, {
     key: "height",
     get: function get() {
-      var height = document.querySelector('.js_smartbanner').offsetHeight;
-      return height !== undefined ? height : 0;
+      try {
+        return document.querySelector('.js_smartbanner').offsetHeight;
+      } catch (error) {
+        return 0;
+      }
     }
   }, {
     key: "platformEnabled",
@@ -416,13 +442,18 @@ function () {
       return this.options.disablePositioning === 'true';
     }
   }, {
+    key: "apiEnabled",
+    get: function get() {
+      return this.options.api === 'true';
+    }
+  }, {
     key: "userAgentExcluded",
     get: function get() {
       if (!this.options.excludeUserAgentRegex) {
         return false;
       }
 
-      return _detector.default.userAgentMatchesRegex(this.options.excludeUserAgentRegex);
+      return _detector["default"].userAgentMatchesRegex(this.options.excludeUserAgentRegex);
     }
   }, {
     key: "userAgentIncluded",
@@ -431,18 +462,23 @@ function () {
         return false;
       }
 
-      return _detector.default.userAgentMatchesRegex(this.options.includeUserAgentRegex);
+      return _detector["default"].userAgentMatchesRegex(this.options.includeUserAgentRegex);
     }
   }, {
     key: "hideTtl",
     get: function get() {
       return this.options.hideTtl ? parseInt(this.options.hideTtl) : false;
     }
+  }, {
+    key: "hidePath",
+    get: function get() {
+      return this.options.hidePath ? this.options.hidePath : '/';
+    }
   }]);
 
   return SmartBanner;
 }();
 
-exports.default = SmartBanner;
+exports["default"] = SmartBanner;
 
 },{"./bakery.js":1,"./detector.js":2,"./optionparser.js":4}]},{},[3]);

@@ -9,8 +9,7 @@ import Bakery from '../../src/bakery.js';
 describe('SmartBanner', function() {
 
   const { JSDOM } = jsdom;
-  const HEAD = `<head>
-      <meta charset="utf-8">
+  const HEAD = `<meta charset="utf-8">
       <meta name="smartbanner:title" content="Smart Application">
       <meta name="smartbanner:author" content="SmartBanner Contributors">
       <meta name="smartbanner:price" content="FREE">
@@ -20,25 +19,23 @@ describe('SmartBanner', function() {
       <meta name="smartbanner:icon-google" content="icon--google.jpg">
       <meta name="smartbanner:button" content="View">
       <meta name="smartbanner:button-url-apple" content="https://itunes.apple.com/us/genre/ios/id36?mt=8">
-      <meta name="smartbanner:button-url-google" content="https://play.google.com/store">
-      <meta name="smartbanner:disable-positioning" content="false">
-    </head>`;
+      <meta name="smartbanner:button-url-google" content="https://play.google.com/store">`;
 
   const HTML = `<!doctype html>
     <html style="margin-top:10px;">
-    ${HEAD}
+    <head>
+      ${HEAD}
+    </head>
     <body>
-      <div class="ui-page ui-page-active" style="position:absolute; top:12px;"></div>
-      <div class="ui-page" style="position:absolute; top:13px;"></div>
     </body>
   </html>`;
 
   const HTML_WITH_CONCLUDE = `<!doctype html>
     <html style="margin-top:10px;">
+    <head>
       ${HEAD}
+    </head>
     <body>
-      <div class="ui-page ui-page-active" style="position:absolute; top:12px;"></div>
-      <div class="ui-page" style="position:absolute; top:13px;"></div>
       ${SCRIPTS}
     </body>
   </html>`;
@@ -46,17 +43,7 @@ describe('SmartBanner', function() {
   const HTML_DISABLED_POSITIONING = `<!doctype html>
     <html style="margin-top:10px;">
     <head>
-      <meta charset="utf-8">
-      <meta name="smartbanner:title" content="Smart Application">
-      <meta name="smartbanner:author" content="SmartBanner Contributors">
-      <meta name="smartbanner:price" content="FREE">
-      <meta name="smartbanner:price-suffix-apple" content=" - On the App Store">
-      <meta name="smartbanner:price-suffix-google" content=" - In Google Play">
-      <meta name="smartbanner:icon-apple" content="icon--apple.jpg">
-      <meta name="smartbanner:icon-google" content="icon--google.jpg">
-      <meta name="smartbanner:button" content="View">
-      <meta name="smartbanner:button-url-apple" content="https://itunes.apple.com/us/genre/ios/id36?mt=8">
-      <meta name="smartbanner:button-url-google" content="https://play.google.com/store">
+      ${HEAD}
       <meta name="smartbanner:disable-positioning" content="true">
     </head>
     <body>
@@ -68,22 +55,51 @@ describe('SmartBanner', function() {
   const HTML_CUSTOM_DESIGN_MODIFIER = `<!doctype html>
     <html style="margin-top:10px;">
     <head>
-      <meta charset="utf-8">
-      <meta name="smartbanner:title" content="Smart Application">
-      <meta name="smartbanner:author" content="SmartBanner Contributors">
-      <meta name="smartbanner:price" content="FREE">
-      <meta name="smartbanner:price-suffix-apple" content=" - On the App Store">
-      <meta name="smartbanner:price-suffix-google" content=" - In Google Play">
-      <meta name="smartbanner:icon-apple" content="icon--apple.jpg">
-      <meta name="smartbanner:icon-google" content="icon--google.jpg">
-      <meta name="smartbanner:button" content="View">
-      <meta name="smartbanner:button-url-apple" content="https://itunes.apple.com/us/genre/ios/id36?mt=8">
-      <meta name="smartbanner:button-url-google" content="https://play.google.com/store">
+      ${HEAD}
       <meta name="smartbanner:custom-design-modifier" content="custom-design">
+      <meta name="smartbanner:close-label" content="Close banner">
     </head>
     <body>
-      <div class="ui-page ui-page-active" style="position:absolute; top:12px;"></div>
-      <div class="ui-page" style="position:absolute; top:13px;"></div>
+    </body>
+  </html>`;
+
+  const HTML_API = `<!doctype html>
+    <html style="margin-top:10px;">
+    <head>
+      ${HEAD}
+      <meta name="smartbanner:api" content="true">
+    </head>
+    <body>
+    </body>
+  </html>`;
+
+  const HTML_IOS = `<!doctype html>
+    <html style="margin-top:10px;">
+    <head>
+      ${HEAD}
+      <meta name="smartbanner:close-label" content="Close iOS Smart App Banner">
+    </head>
+    <body>
+    </body>
+  </html>`;
+
+  const HTML_ANDROID = `<!doctype html>
+    <html style="margin-top:10px;">
+    <head>
+      ${HEAD}
+      <meta name="smartbanner:close-label" content="Close Android Smart App Banner">
+    </head>
+    <body>
+    </body>
+  </html>`;
+
+  const HTML_UNKNOWN = `<!doctype html>
+    <html style="margin-top:10px;">
+    <head>
+      ${HEAD}
+      <meta name="smartbanner:close-label" content="Close Smart App Banner">
+    </head>
+    <body>
     </body>
   </html>`;
 
@@ -95,7 +111,7 @@ describe('SmartBanner', function() {
   const HTML_WITH_JQUERY_MOBILE_AND_META = `<!doctype html><html>${HEAD}<body class="ui-page">${SCRIPTS_JQUERY_MOBILE}</body></html>`;
 
   const IOS_BODY = `<div class="smartbanner smartbanner--ios js_smartbanner">
-      <a href="javascript:void();" class="smartbanner__exit js_smartbanner__exit"></a>
+      <a href="javascript:void();" class="smartbanner__exit js_smartbanner__exit" aria-label="Close iOS Smart App Banner"></a>
       <div class="smartbanner__icon" style="background-image: url(icon--apple.jpg);"></div>
       <div class="smartbanner__info">
         <div>
@@ -104,11 +120,11 @@ describe('SmartBanner', function() {
           <div class="smartbanner__info__price">FREE - On the App Store</div>
         </div>
       </div>
-      <a href="https://itunes.apple.com/us/genre/ios/id36?mt=8" target="_blank" class="smartbanner__button"><span class="smartbanner__button__label">View</span></a>
+      <a href="https://itunes.apple.com/us/genre/ios/id36?mt=8" target="_blank" class="smartbanner__button js_smartbanner__button" rel="noopener" aria-label="View"><span class="smartbanner__button__label">View</span></a>
     </div>`;
 
   const ANDROID_BODY = `<div class="smartbanner smartbanner--android js_smartbanner">
-      <a href="javascript:void();" class="smartbanner__exit js_smartbanner__exit"></a>
+      <a href="javascript:void();" class="smartbanner__exit js_smartbanner__exit" aria-label="Close Android Smart App Banner"></a>
       <div class="smartbanner__icon" style="background-image: url(icon--google.jpg);"></div>
       <div class="smartbanner__info">
         <div>
@@ -117,11 +133,24 @@ describe('SmartBanner', function() {
           <div class="smartbanner__info__price">FREE - In Google Play</div>
         </div>
       </div>
-      <a href="https://play.google.com/store" target="_blank" class="smartbanner__button"><span class="smartbanner__button__label">View</span></a>
+      <a href="https://play.google.com/store" target="_blank" class="smartbanner__button js_smartbanner__button" rel="noopener" aria-label="View"><span class="smartbanner__button__label">View</span></a>
+    </div>`;
+
+  const UNDEFINED_BODY = `<div class="smartbanner smartbanner--undefined js_smartbanner">
+      <a href="javascript:void();" class="smartbanner__exit js_smartbanner__exit" aria-label="Close Smart App Banner"></a>
+      <div class="smartbanner__icon" style="background-image: url(icon--apple.jpg);"></div>
+      <div class="smartbanner__info">
+        <div>
+          <div class="smartbanner__info__title">Smart Application</div>
+          <div class="smartbanner__info__author">SmartBanner Contributors</div>
+          <div class="smartbanner__info__price">FREE</div>
+        </div>
+      </div>
+      <a href="#" target="_blank" class="smartbanner__button js_smartbanner__button" rel="noopener" aria-label="View"><span class="smartbanner__button__label">View</span></a>
     </div>`;
 
   const ANDROID_CUSTOM_DESIGN_BODY = `<div class="smartbanner smartbanner--custom-design js_smartbanner">
-      <a href="javascript:void();" class="smartbanner__exit js_smartbanner__exit"></a>
+      <a href="javascript:void();" class="smartbanner__exit js_smartbanner__exit" aria-label="Close banner"></a>
       <div class="smartbanner__icon" style="background-image: url(icon--google.jpg);"></div>
       <div class="smartbanner__info">
         <div>
@@ -130,7 +159,7 @@ describe('SmartBanner', function() {
           <div class="smartbanner__info__price">FREE - In Google Play</div>
         </div>
       </div>
-      <a href="https://play.google.com/store" target="_blank" class="smartbanner__button"><span class="smartbanner__button__label">View</span></a>
+      <a href="https://play.google.com/store" target="_blank" class="smartbanner__button js_smartbanner__button" rel="noopener" aria-label="View"><span class="smartbanner__button__label">View</span></a>
     </div>`;
 
   const USER_AGENT_IPHONE_IOS8 = 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0_2 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12A405 Safari/600.1.4';
@@ -141,6 +170,7 @@ describe('SmartBanner', function() {
   const USER_AGENT_ANDROID = 'Mozilla/5.0 (Linux; Android 5.1; XT1039 Build/LPB23.13-17.6; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/50.0.2661.86 Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/79.0.0.18.71;]';
   const USER_AGENT_ANDROID_CUSTOM_WEBAPP = 'Mozilla/5.0 (Linux; Android 5.1; XT1039 Build/LPB23.13-17.6; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/50.0.2661.86 Mobile Safari/537.36 [FB_IAB/FB4A;FBAV/79.0.0.18.71;]  My Example Webapp';
   const USER_AGENT_DESKTOP = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/601.7.7 (KHTML, like Gecko) Version/9.1.2 Safari/601.7.7';
+  const USER_AGENT_UNKNOWN = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/601.7.7 (KHTML, like Gecko) Version/0.0.1 Unknown/0.0.1';
 
   let smartbanner = null;
 
@@ -149,7 +179,8 @@ describe('SmartBanner', function() {
     context('without options', function() {
 
       before(function() {
-        global.window = new JSDOM('<html></html>', { userAgent: USER_AGENT_IPHONE_IOS9 }).window;
+        const resourceLoader = new jsdom.ResourceLoader({userAgent: USER_AGENT_IPHONE_IOS9});
+        global.window = new JSDOM('<html></html>', { resource: resourceLoader }).window;
         global.document = window.document;
         global.getComputedStyle = global.document.defaultView.getComputedStyle;
         smartbanner = new SmartBanner();
@@ -166,10 +197,12 @@ describe('SmartBanner', function() {
       context('when on iPhone', function() {
 
         beforeEach(function() {
-          global.window = new JSDOM(HTML, {userAgent: USER_AGENT_IPHONE_IOS9}).window;
+          const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPHONE_IOS9 });
+          global.window = new JSDOM(HTML_IOS, { resources: resourceLoader }).window;
           global.document = window.document;
           global.getComputedStyle = window.getComputedStyle;
           global.$ = undefined;
+          global.Event = window.Event;
           smartbanner = new SmartBanner();
         });
 
@@ -195,9 +228,11 @@ describe('SmartBanner', function() {
       context('when on iPad', function() {
 
         before(function() {
-          global.window = new JSDOM(HTML, {userAgent: USER_AGENT_IPAD}).window;
+          const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPAD });
+          global.window = new JSDOM(HTML_IOS, { resources: resourceLoader }).window;
           global.document = window.document;
           global.getComputedStyle = window.getComputedStyle;
+          global.Event = window.Event;
           smartbanner = new SmartBanner();
         });
 
@@ -212,9 +247,11 @@ describe('SmartBanner', function() {
       context('when on iPod', function() {
 
         before(function() {
-          global.window = new JSDOM(HTML, {userAgent: USER_AGENT_IPOD}).window;
+          const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPOD });
+          global.window = new JSDOM(HTML_IOS, { resources: resourceLoader }).window;
           global.document = window.document;
           global.getComputedStyle = window.getComputedStyle;
+          global.Event = window.Event;
           smartbanner = new SmartBanner();
         });
 
@@ -230,9 +267,11 @@ describe('SmartBanner', function() {
 
         context('without custom design modifier', function() {
           before(function() {
-            global.window = new JSDOM(HTML, { userAgent: USER_AGENT_ANDROID }).window;
+            const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_ANDROID });
+            global.window = new JSDOM(HTML_ANDROID, { resources: resourceLoader }).window;
             global.document = window.document;
             global.getComputedStyle = window.getComputedStyle;
+            global.Event = window.Event;
             smartbanner = new SmartBanner();
           });
 
@@ -241,13 +280,16 @@ describe('SmartBanner', function() {
             let html = document.querySelector('.js_smartbanner').outerHTML;
             expect(html).to.eql(ANDROID_BODY);
           });
+
         });
 
         context('with custom design modifier', function() {
           before(function() {
-            global.window = new JSDOM(HTML_CUSTOM_DESIGN_MODIFIER, { userAgent: USER_AGENT_ANDROID }).window;
+            const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_ANDROID });
+            global.window = new JSDOM(HTML_CUSTOM_DESIGN_MODIFIER, { resources: resourceLoader }).window;
             global.document = window.document;
             global.getComputedStyle = window.getComputedStyle;
+            global.Event = window.Event;
             smartbanner = new SmartBanner();
           });
 
@@ -263,9 +305,11 @@ describe('SmartBanner', function() {
       context('when on desktop', function() {
 
         before(function() {
-          global.window = new JSDOM(HTML, { userAgent: USER_AGENT_DESKTOP }).window;
+          const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_DESKTOP });
+          global.window = new JSDOM(HTML, { resources: resourceLoader }).window;
           global.document = window.document;
           global.getComputedStyle = window.getComputedStyle;
+          global.Event = window.Event;
           smartbanner = new SmartBanner();
           smartbanner.publish();
         });
@@ -281,9 +325,11 @@ describe('SmartBanner', function() {
     context('when has been closed within current session', function() {
 
       before(function() {
-        global.window = new JSDOM(HTML, { userAgent: USER_AGENT_ANDROID }).window;
+        const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_ANDROID });
+        global.window = new JSDOM(HTML, { resources: resourceLoader }).window;
         global.document = window.document;
         global.getComputedStyle = window.getComputedStyle;
+        global.Event = window.Event;
         smartbanner = new SmartBanner();
         smartbanner.publish();
         smartbanner.exit();
@@ -299,18 +345,22 @@ describe('SmartBanner', function() {
     context('when has been closed, but is reopened in new session', function() {
 
       before(function() {
-        global.window = new JSDOM(HTML, { userAgent: USER_AGENT_ANDROID }).window;
+        const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_ANDROID });
+        global.window = new JSDOM(HTML, { resources: resourceLoader }).window;
         global.document = window.document;
         global.getComputedStyle = window.getComputedStyle;
+        global.Event = window.Event;
         smartbanner = new SmartBanner();
         smartbanner.publish();
         smartbanner.exit();
       });
 
       it('expected to add to body', function() {
-        global.window = new JSDOM(HTML, { userAgent: USER_AGENT_ANDROID }).window;
+        const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_ANDROID });
+        global.window = new JSDOM(HTML, { resources: resourceLoader }).window;
         global.document = window.document;
         global.getComputedStyle = window.getComputedStyle;
+        global.Event = window.Event;
         smartbanner = new SmartBanner();
         smartbanner.publish();
         expect(document.querySelector('.js_smartbanner')).to.exist;
@@ -340,9 +390,11 @@ describe('SmartBanner', function() {
       </html>`;
 
       before(function() {
-        global.window = new JSDOM(HTML_WITH_PLATFROM_OPTION_ANDROID, { userAgent: USER_AGENT_IPHONE_IOS9 }).window;
+        const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPHONE_IOS9 });
+        global.window = new JSDOM(HTML_WITH_PLATFROM_OPTION_ANDROID, { resources: resourceLoader }).window;
         global.document = window.document;
         global.getComputedStyle = window.getComputedStyle;
+        global.Event = window.Event;
         smartbanner = new SmartBanner();
         smartbanner.publish();
       });
@@ -370,15 +422,18 @@ describe('SmartBanner', function() {
           <meta name="smartbanner:button-url-google" content="https://play.google.com/store">
           <meta name="smartbanner:enabled-platforms" content="android">
           <meta name="smartbanner:include-user-agent-regex" content=".*iPhone OS [9\\-10].*">
+          <meta name="smartbanner:close-label" content="Close iOS Smart App Banner">
         </head>
         <body>
         </body>
       </html>`;
 
       before(function() {
-        global.window = new JSDOM(HTML_WITH_PLATFROM_OPTION_ANDROID_INCLUDE_IOS9, { userAgent: USER_AGENT_IPHONE_IOS9 }).window;
+        const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPHONE_IOS9 });
+        global.window = new JSDOM(HTML_WITH_PLATFROM_OPTION_ANDROID_INCLUDE_IOS9, { resources: resourceLoader }).window;
         global.document = window.document;
         global.getComputedStyle = window.getComputedStyle;
+        global.Event = window.Event;
         smartbanner = new SmartBanner();
       });
 
@@ -415,9 +470,11 @@ describe('SmartBanner', function() {
       </html>`;
 
       before(function() {
-        global.window = new JSDOM(HTML_WITH_PLATFROM_OPTION_ANDROID_INCLUDE_IOS9_EXCLUDE_WEBAPP, { userAgent: USER_AGENT_IPHONE_CUSTOM_WEBAPP }).window;
+        const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPHONE_CUSTOM_WEBAPP });
+        global.window = new JSDOM(HTML_WITH_PLATFROM_OPTION_ANDROID_INCLUDE_IOS9_EXCLUDE_WEBAPP, { resources: resourceLoader }).window;
         global.document = window.document;
         global.getComputedStyle = window.getComputedStyle;
+        global.Event = window.Event;
         smartbanner = new SmartBanner();
         smartbanner.publish();
       });
@@ -450,9 +507,11 @@ describe('SmartBanner', function() {
       </html>`;
 
       before(function() {
-        global.window = new JSDOM(HTML_WITH_PLATFROM_OPTION_IOS, { userAgent: USER_AGENT_ANDROID }).window;
+        const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_ANDROID });
+        global.window = new JSDOM(HTML_WITH_PLATFROM_OPTION_IOS, { resources: resourceLoader }).window;
         global.document = window.document;
         global.getComputedStyle = window.getComputedStyle;
+        global.Event = window.Event;
         smartbanner = new SmartBanner();
         smartbanner.publish();
       });
@@ -470,9 +529,11 @@ describe('SmartBanner', function() {
     context('when on iPhone', function() {
 
       before(function() {
-        global.window = new JSDOM(HTML, { userAgent: USER_AGENT_IPHONE_IOS9 }).window;
+        const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPHONE_IOS9 });
+        global.window = new JSDOM(HTML_IOS, { resources: resourceLoader }).window;
         global.document = window.document;
         global.getComputedStyle = window.getComputedStyle;
+        global.Event = window.Event;
         smartbanner = new SmartBanner();
       });
 
@@ -501,9 +562,11 @@ describe('SmartBanner', function() {
     context('when on iPad', function() {
 
       before(function() {
-        global.window = new JSDOM(HTML, { userAgent: USER_AGENT_IPAD }).window;
+        const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPAD });
+        global.window = new JSDOM(HTML_IOS, { resources: resourceLoader }).window;
         global.document = window.document;
         global.getComputedStyle = window.getComputedStyle;
+        global.Event = window.Event;
         smartbanner = new SmartBanner();
       });
 
@@ -532,9 +595,11 @@ describe('SmartBanner', function() {
     context('when on iPod', function() {
 
       before(function() {
-        global.window = new JSDOM(HTML, { userAgent: USER_AGENT_IPOD }).window;
+        const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPOD });
+        global.window = new JSDOM(HTML_IOS, { resources: resourceLoader }).window;
         global.document = window.document;
         global.getComputedStyle = window.getComputedStyle;
+        global.Event = window.Event;
         smartbanner = new SmartBanner();
       });
 
@@ -563,9 +628,11 @@ describe('SmartBanner', function() {
     context('when on Android', function() {
 
       before(function() {
-        global.window = new JSDOM(HTML, { userAgent: USER_AGENT_ANDROID }).window;
+        const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_ANDROID });
+        global.window = new JSDOM(HTML_ANDROID, { resources: resourceLoader }).window;
         global.document = window.document;
         global.getComputedStyle = window.getComputedStyle;
+        global.Event = window.Event;
         smartbanner = new SmartBanner();
       });
 
@@ -591,6 +658,39 @@ describe('SmartBanner', function() {
 
     });
 
+    context('when on unidentified platform', function() {
+
+      before(function() {
+        const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_UNKNOWN });
+        global.window = new JSDOM(HTML_UNKNOWN, { resources: resourceLoader }).window;
+        global.document = window.document;
+        global.getComputedStyle = window.getComputedStyle;
+        global.Event = window.Event;
+        smartbanner = new SmartBanner();
+      });
+
+      it('expected to work against no platform', function() {
+        expect(smartbanner.platform).to.be.undefined;
+      });
+
+      it('expected to have no price suffix', function() {
+        expect(smartbanner.priceSuffix).to.be.empty;
+      });
+
+      it('expected to return undefined (broken) template', function() {
+        expect(smartbanner.html).to.eql(UNDEFINED_BODY);
+      });
+
+      it('expected to have Apple icon as fallback', function() {
+        expect(smartbanner.icon).to.eql('icon--apple.jpg');
+      });
+
+      it('expected to have empty button URL', function() {
+        expect(smartbanner.buttonUrl).to.eql('#');
+      });
+
+    });
+
   });
 
   describe('exit', function() {
@@ -598,7 +698,8 @@ describe('SmartBanner', function() {
     context('without jQuery Mobile', function() {
 
       beforeEach(function() {
-        global.window = new JSDOM(HTML, { userAgent: USER_AGENT_IPHONE_IOS9 }).window;
+        const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPHONE_IOS9 });
+        global.window = new JSDOM(HTML, { resources: resourceLoader }).window;
         global.document = window.document;
         global.getComputedStyle = window.getComputedStyle;
         smartbanner = new SmartBanner();
@@ -627,16 +728,19 @@ describe('SmartBanner', function() {
         expect(margin).to.eql(smartbanner.originalTopMargin);
         done();
       });
+
     });
 
     context('with jQuery Mobile', function(done) {
 
       before(function(done) {
-        global.window = new JSDOM(HTML_WITH_JQUERY_MOBILE_AND_META, { runScripts: 'dangerously', resources: 'usable', userAgent: USER_AGENT_IPHONE_IOS9 }).window;
+        const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPHONE_IOS9 });
+        global.window = new JSDOM(HTML_WITH_JQUERY_MOBILE_AND_META, { runScripts: 'dangerously', resources: resourceLoader }).window;
         global.window.conclude = () => {
           global.document = window.document;
           global.getComputedStyle = window.getComputedStyle;
           global.$ = window.jQuery;
+          global.Event = window.Event;
           smartbanner = new SmartBanner();
           smartbanner.publish();
           done();
@@ -658,25 +762,39 @@ describe('SmartBanner', function() {
 
   describe('height', function() {
     before(function() {
-      global.window = new JSDOM(HTML_WITH_CONCLUDE, { userAgent: USER_AGENT_IPHONE_IOS9, runScripts: 'dangerously', resources: 'usable' }).window;
+      const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPHONE_IOS9 });
+      global.window = new JSDOM(HTML, { runScripts: 'dangerously', resources: resourceLoader }).window;
       global.document = window.document;
       global.getComputedStyle = window.getComputedStyle;
+      global.Event = window.Event;
       smartbanner = new SmartBanner();
       smartbanner.publish();
     });
 
-    it('expected to match component offset height', function() {
-      let height = document.querySelector('.js_smartbanner').offsetHeight;
-      height = height !== undefined ? height : 0;
-      expect(smartbanner.height).to.eql(height);
+    context('when offset height available', function() {
+      it('expected to match component offset height', function() {
+        let height = document.querySelector('.js_smartbanner').offsetHeight;
+        expect(smartbanner.height).to.eql(height);
+      });
+    });
+
+    context('when offset height N/A', function() {
+      before(function() {
+        smartbanner.exit();
+      });
+      it('expected to return default height', function() {
+        expect(smartbanner.height).to.eql(0);
+      });
     });
   });
 
   describe('disable-positioning', function() {
     before(function() {
-      global.window = new JSDOM(HTML_DISABLED_POSITIONING, { userAgent: USER_AGENT_IPHONE_IOS9 }).window;
+      const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPHONE_IOS9 });
+      global.window = new JSDOM(HTML_DISABLED_POSITIONING, { resources: resourceLoader }).window;
       global.document = window.document;
       global.getComputedStyle = window.getComputedStyle;
+      global.Event = window.Event;
       smartbanner = new SmartBanner();
       smartbanner.publish();
     });
@@ -706,6 +824,170 @@ describe('SmartBanner', function() {
       expect(top).to.eql(12);
       done();
     });
+  });
+
+  describe('apiEnabled', function() {
+
+    const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPHONE_IOS9 });
+
+    context('when API option not set', function() {
+
+      before(function() {
+        global.window = new JSDOM(HTML, { resources: resourceLoader }).window;
+        global.document = window.document;
+        smartbanner = new SmartBanner();
+      });
+
+      it('expected to return false ', function() {
+        expect(smartbanner.apiEnabled).to.be.false;
+      });
+
+    });
+
+    context('when API option set', function() {
+
+      before(function() {
+        global.window = new JSDOM(HTML_API, { resources: resourceLoader }).window;
+        global.document = window.document;
+        smartbanner = new SmartBanner();
+      });
+
+      it('expected to return true ', function() {
+        expect(smartbanner.apiEnabled).to.be.true;
+      });
+
+    });
+
+  });
+
+  describe('handleExitClick', function() {
+    before(function() {
+      const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPHONE_IOS9 });
+      global.window = new JSDOM(HTML_API, { resources: resourceLoader }).window;
+      global.document = window.document;
+      global.getComputedStyle = window.getComputedStyle;
+      smartbanner = new SmartBanner();
+      smartbanner.publish();
+    });
+
+    it('expected to handle exit', function(done) {
+      document.addEventListener('smartbanner.exit', function () {
+        done();
+      });
+      let clickEvent = document.createEvent("HTMLEvents");
+      clickEvent.initEvent("click", false, true);
+      document.querySelector('.js_smartbanner__exit').dispatchEvent(clickEvent);
+    });
+
+  });
+
+  describe('handleClickout', function() {
+    before(function() {
+      const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPHONE_IOS9 });
+      global.window = new JSDOM(HTML_API, { resources: resourceLoader }).window;
+      global.document = window.document;
+      global.getComputedStyle = window.getComputedStyle;
+      smartbanner = new SmartBanner();
+      smartbanner.publish();
+    });
+
+    it('expected to handle clickout', function(done) {
+      document.addEventListener('smartbanner.clickout', function () {
+        done();
+      });
+      let clickEvent = document.createEvent("HTMLEvents");
+      clickEvent.initEvent("click", false, true);
+      document.querySelector('.js_smartbanner__button').dispatchEvent(clickEvent);
+    });
+
+  });
+
+  describe('hidePath', function() {
+
+    const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPHONE_IOS9 });
+
+    context('when option is not set', function() {
+
+      before(function() {
+        global.window = new JSDOM(HTML, { resources: resourceLoader }).window;
+        global.document = window.document;
+        smartbanner = new SmartBanner();
+      });
+
+      it('returns default hide path', function() {
+        expect(smartbanner.hidePath).to.eql('/');
+      });
+    });
+
+    context('when option is set', function() {
+
+      const HTML_WITH_HIDE_PATH = `<!doctype html>
+        <html style="margin-top:10px;">
+        <head>
+          ${HEAD}
+          <meta name="smartbanner:hide-path" content="/smartbannerjs">
+        </head>
+        <body>
+          <div class="ui-page ui-page-active" style="position:absolute; top:12px;"></div>
+          <div class="ui-page" style="position:absolute; top:13px;"></div>
+        </body>
+      </html>`;
+
+      before(function() {
+        global.window = new JSDOM(HTML_WITH_HIDE_PATH, { resources: resourceLoader }).window;
+        global.document = window.document;
+        smartbanner = new SmartBanner();
+      });
+
+      it('returns option value', function() {
+        expect(smartbanner.hidePath).to.eql('/smartbannerjs');
+      });
+    });
+
+  });
+
+  describe('hideTtl', function() {
+
+    const resourceLoader = new jsdom.ResourceLoader({ userAgent: USER_AGENT_IPHONE_IOS9 });
+
+    context('when option is not set', function() {
+
+      before(function() {
+        global.window = new JSDOM(HTML, { resources: resourceLoader }).window;
+        global.document = window.document;
+        smartbanner = new SmartBanner();
+      });
+
+      it('returns default hide time to live', function() {
+        expect(smartbanner.hideTtl).to.be.false;
+      });
+    });
+
+    context('when option is set', function() {
+
+      const HTML_WITH_HIDE_TTL = `<!doctype html>
+        <html style="margin-top:10px;">
+        <head>
+          ${HEAD}
+          <meta name="smartbanner:hide-ttl" content="1244">
+        </head>
+        <body>
+          <div class="ui-page ui-page-active" style="position:absolute; top:12px;"></div>
+          <div class="ui-page" style="position:absolute; top:13px;"></div>
+        </body>
+      </html>`;
+
+      before(function() {
+        global.window = new JSDOM(HTML_WITH_HIDE_TTL, { resources: resourceLoader }).window;
+        global.document = window.document;
+        smartbanner = new SmartBanner();
+      });
+
+      it('returns option value', function() {
+        expect(smartbanner.hideTtl).to.eql(1244);
+      });
+    });
+
   });
 
 });

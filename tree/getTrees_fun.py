@@ -4,7 +4,6 @@
 	# import os
 	# import cPickle as pickle
 
-
 def getTheTrees(): 
 	##DOWNLOAD taxdump and store in taxo folder
 	##DOWNLOAD TAXREF BY HAND! and put it in taxo/
@@ -75,6 +74,10 @@ def getTheTrees():
 			if (tid_type=="common name"):
 				cpt +=1
 				ATTR[taxid].common_name.append(tid_val)
+                        if (tid_type=="genbank common name"):
+                                cpt +=1
+                                ATTR[taxid].common_name.append(tid_val)
+
 				# if (ATTR[taxid].common_name!=""):
 				# 	ATTR[taxid].common_name = ATTR[taxid].common_name + ", " + tid_val
 				# else: 
@@ -96,8 +99,8 @@ def getTheTrees():
 			if (T.has_key(dad)==False):
 				T[dad] = Tree()
 				T[dad].name = dad
-#				T[dad].rank = rank
-#				T[dad].rank_FR = RANKS[rank]
+				T[dad].rank = rank
+				T[dad].rank_FR = RANKS[rank]
 				T[dad].taxid = dad
 				T[dad].sci_name = ATTR[dad].sci_name
 				T[dad].common_name = ATTR[dad].common_name
@@ -108,7 +111,7 @@ def getTheTrees():
 				T[son] = Tree()
 				T[son].name = son
 				T[son].rank = rank
-#				T[son].rank_FR = RANKS[rank]
+				T[son].rank_FR = RANKS[rank]
 				T[son].taxid = son
 				T[son].sci_name = ATTR[son].sci_name
 				T[son].common_name = ATTR[son].common_name

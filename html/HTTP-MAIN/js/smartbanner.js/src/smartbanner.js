@@ -3,6 +3,7 @@ import Detector from './detector.js';
 import Bakery from './bakery.js';
 
 const DEFAULT_PLATFORMS = 'android,ios';
+const DEFAULT_CLOSE_LABEL = 'Close';
 
 let datas = {
   originalTop: 'data-smartbanner-original-top',
@@ -14,6 +15,10 @@ function handleExitClick(event, self) {
   event.preventDefault();
 }
 
+function handleClickout(event, self) {
+  self.clickout();
+}
+
 function handleJQueryMobilePageLoad(event) {
   if (!this.positioningDisabled) {
     setContentPosition(event.data.height);
@@ -23,6 +28,10 @@ function handleJQueryMobilePageLoad(event) {
 function addEventListeners(self) {
   let closeIcon = document.querySelector('.js_smartbanner__exit');
   closeIcon.addEventListener('click', (event) => handleExitClick(event, self));
+
+  let button = document.querySelector('.js_smartbanner__button');
+  button.addEventListener('click', (event) => handleClickout(event, self));
+
   if (Detector.jQueryMobilePage()) {
     $(document).on('pagebeforeshow', self, handleJQueryMobilePageLoad);
   }
@@ -114,10 +123,14 @@ export default class SmartBanner {
     return '#';
   }
 
+  get closeLabel() {
+    return this.options.closeLabel !== undefined ? this.options.closeLabel : DEFAULT_CLOSE_LABEL;
+  }
+
   get html() {
     let modifier = !this.options.customDesignModifier ? this.platform : this.options.customDesignModifier;
     return `<div class="smartbanner smartbanner--${modifier} js_smartbanner">
-      <a href="javascript:void();" class="smartbanner__exit js_smartbanner__exit"></a>
+      <a href="javascript:void();" class="smartbanner__exit js_smartbanner__exit" aria-label="${this.closeLabel}"></a>
       <div class="smartbanner__icon" style="background-image: url(${this.icon});"></div>
       <div class="smartbanner__info">
         <div>
@@ -126,13 +139,16 @@ export default class SmartBanner {
           <div class="smartbanner__info__price">${this.options.price}${this.priceSuffix}</div>
         </div>
       </div>
-      <a href="${this.buttonUrl}" target="_blank" class="smartbanner__button"><span class="smartbanner__button__label">${this.options.button}</span></a>
+      <a href="${this.buttonUrl}" target="_blank" class="smartbanner__button js_smartbanner__button" rel="noopener" aria-label="${this.options.button}"><span class="smartbanner__button__label">${this.options.button}</span></a>
     </div>`;
   }
 
   get height() {
-    let height = document.querySelector('.js_smartbanner').offsetHeight;
-    return height !== undefined ? height : 0;
+    try {
+      return document.querySelector('.js_smartbanner').offsetHeight;
+    } catch(error) {
+      return 0;
+    }
   }
 
   get platformEnabled() {
@@ -142,6 +158,10 @@ export default class SmartBanner {
 
   get positioningDisabled() {
     return this.options.disablePositioning === 'true';
+  }
+
+  get apiEnabled() {
+    return this.options.api === 'true';
   }
 
   get userAgentExcluded() {
@@ -160,6 +180,10 @@ export default class SmartBanner {
 
   get hideTtl() {
     return this.options.hideTtl ? parseInt(this.options.hideTtl) : false;
+  }
+
+  get hidePath() {
+    return this.options.hidePath ? this.options.hidePath : '/';
   }
 
   publish() {
@@ -185,6 +209,8 @@ export default class SmartBanner {
     let bannerDiv = document.createElement('div');
     document.querySelector('body').appendChild(bannerDiv);
     bannerDiv.outerHTML = this.html;
+    let event = new Event('smartbanner.view');
+    document.dispatchEvent(event);
     if (!this.positioningDisabled) {
       setContentPosition(this.height);
     }
@@ -198,6 +224,13 @@ export default class SmartBanner {
     }
     let banner = document.querySelector('.js_smartbanner');
     document.querySelector('body').removeChild(banner);
+    let event = new Event('smartbanner.exit');
+    document.dispatchEvent(event);
     Bakery.bake(this.hideTtl, this.hidePath);
+  }
+
+  clickout() {
+    let event = new Event('smartbanner.clickout');
+    document.dispatchEvent(event);
   }
 }

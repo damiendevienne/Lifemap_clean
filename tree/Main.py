@@ -20,27 +20,26 @@ os.system("mkdir genomes") ##if not exists
 ## 1. get the tree and update database
 print '\NCREATING DATABASE'
 print '  Doing Archaeal tree...'
-#os.system('python Traverse_To_Pgsql_2.py 1 1 --simplify False');
 os.system('python Traverse_To_Pgsql_2.py 1 1 --simplify %s --lang %s'%(args.simplify, args.lang));
 print '  ...Done'
 with open('tempndid', 'r') as f:
     ndid = f.readline()
 print '  Doing Eukaryotic tree... start at id: %s' % ndid
-#os.system('python Traverse_To_Pgsql_2.py 2 %s --updatedb False --simplify %s --lang %s'%(ndid, args.simplify, args.lang)) ;
+os.system('python Traverse_To_Pgsql_2.py 2 %s --updatedb False --simplify %s --lang %s'%(ndid, args.simplify, args.lang)) ;
 print '  ...Done'
 with open('tempndid', 'r') as f:
     ndid = f.readline()
 print '  Doing Bact tree... start at id:%s ' % ndid
-#os.system('python Traverse_To_Pgsql_2.py 3 %s --updatedb False --simplify %s --lang %s'%(ndid, args.simplify, args.lang));
+os.system('python Traverse_To_Pgsql_2.py 3 %s --updatedb False --simplify %s --lang %s'%(ndid, args.simplify, args.lang));
 print '  ...Done'
 
 ## 2. Get additional info from NCBI
 print '  Getting addditional Archaeal info...'
 os.system('python Additional.info.py 1')
 print '  Getting addditional Euka info...'
-#os.system('python Additional.info.py 2')
+os.system('python Additional.info.py 2')
 print '  Getting addditional Bacter info...'
-#os.system('python Additional.info.py 3')
+os.system('python Additional.info.py 3')
 print '  ...Done'
 
 ##2.1. Get FULL info from NCBI (new sept 2019)
@@ -67,9 +66,14 @@ os.system('sudo rm -r /var/lib/mod_tile/default/')
 
 ##7. Get New coordinates for generating tiles
 os.system('python GetAllTilesCoord.py')
-## 7. Restarting the machine 
-print 'restart NOW'
-#os.system('sudo reboot')
+
+##8. restart services
+os.system("sudo service apache2 restart")
+os.system("sudo service renderd restart")
+os.system("sudo service renderdlist start")
+
+##9. Compute tiles for the 5 first zoom levels ON 7 THREADS
+os.system("/opt/mod_tile/render_list -a -z 0 -Z 8 -n 7")
 
 
 

@@ -446,12 +446,17 @@
       <tokenizer class="solr.WhitespaceTokenizerFactory"/>
     </analyzer>
   </fieldType>
-
+  <fieldType class="solr.TextField" name="textSuggest" positionIncrementGap="100">
+    <analyzer>
+      <tokenizer class="solr.StandardTokenizerFactory"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+  </fieldType>
   <field name="_nest_path_" type="_nest_path_"/>
   <field name="_root_" type="string" docValues="false" indexed="true" stored="false"/>
   <field name="_text_" type="text_general" multiValued="true" indexed="true" stored="false"/>
   <field name="_version_" type="plong" indexed="false" stored="false"/>
-  <field name="all" type="text_general"/>
+  <field name="all" type="string"/>
   <field name="authority" type="text_general"/>
   <field name="common_name" type="text_general"/>
   <field name="coordinates" type="pdoubles"/>

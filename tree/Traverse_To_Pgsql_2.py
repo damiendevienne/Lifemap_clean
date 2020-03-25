@@ -11,6 +11,9 @@ import sys
 import os
 from argparse import ArgumentParser, FileType ##for options handling
 import numpy as np
+#new
+import math
+
 from ete3 import Tree
 #from ete3 import NCBITaxa
 import psycopg2 ##for postgresql connection
@@ -26,6 +29,21 @@ parser.add_argument('--simplify', nargs='?', const='True', default='False', help
 
 args = parser.parse_args()
 #print args
+
+def midpoint(x1, y1, x2, y2):
+#Input values as degrees
+#Convert to radians
+    lat1 = math.radians(x1)
+    lon1 = math.radians(y1)
+    lat2 = math.radians(x2)
+    lon2 = math.radians(y2)
+    bx = math.cos(lat2) * math.cos(lon2 - lon1)
+    by = math.cos(lat2) * math.sin(lon2 - lon1)
+    lat3 = math.atan2(math.sin(lat1) + math.sin(lat2),math.sqrt((math.cos(lat1) + bx) * (math.cos(lat1) + bx) + by**2))
+    lon3 = lon1 + math.atan2(by, math.cos(lat1) + bx)
+    return [math.degrees(lat3), math.degrees(lon3)]
+
+
 
 ##update db (if requested?)
 def updateDB():
@@ -191,7 +209,11 @@ def writeosmWays(node, id):
         wayName = "\u2190  " + left + "     -     " + right + "  \u2192"
     else: #we are on the left
         wayName = "\u2190  " + right + "     -     " + left + "  \u2192"
-    command = "INSERT INTO lines (id, branch, zoomview, ref, name, way) VALUES(%d,'TRUE',%d,'%s',E'%s',ST_Transform(ST_GeomFromText('LINESTRING(%.20f %.20f, %.20f %.20f)', 4326), 900913));" % (id, node.zoomview, groupnb, wayName, node.up.x, node.up.y, node.x, node.y);
+
+	##new with midpoints:
+    midlatlon = midpoint(node.up.x, node.up.y, node.x, node.y)
+
+    command = "INSERT INTO lines (id, branch, zoomview, ref, name, way) VALUES(%d,'TRUE',%d,'%s',E'%s',ST_Transform(ST_GeomFromText('LINESTRING(%.20f %.20f, %.20f %.20f,%.20f %.20f)', 4326), 900913));" % (id, node.zoomview, groupnb, wayName, node.up.x, node.up.y, midlatlon[0],midlatlon[1], node.x, node.y);
     cur.execute(command);
     ##conn.commit();
         
@@ -256,6 +278,8 @@ for n in t.traverse():
     #add parenthesis to the common name
     if n.common_name!='':
         n.common_name = "(" + n.common_name + ")"
+    if n.common_name_long!='':
+        n.common_name_long = "(" + n.common_name_long + ")"
     n.nbdesc = nbdesc;
     nbsons = len(child);
     angles = [];
@@ -303,7 +327,7 @@ json.write("[\n");
 def writejsonNode(node):
     sci_name = node.sci_name
     sci_name = sci_name.replace('"','\\"')
-    common_name = node.common_name
+    common_name = node.common_name_long
     common_name = common_name.replace('"','\\"')
 	##new attributes
     authority = node.authority

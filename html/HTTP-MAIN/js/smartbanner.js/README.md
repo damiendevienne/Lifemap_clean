@@ -1,26 +1,23 @@
-# smartbanner.js [![Build Status](https://travis-ci.org/ain/smartbanner.js.svg?branch=master)](https://travis-ci.org/ain/smartbanner.js) [![npm version](https://badge.fury.io/js/smartbanner.js.svg)](https://badge.fury.io/js/smartbanner.js) [![Bower version](https://badge.fury.io/bo/smartbanner.js.svg)](https://badge.fury.io/bo/smartbanner.js)
+# smartbanner.js [![Build Status](https://travis-ci.org/ain/smartbanner.js.svg?branch=master)](https://travis-ci.org/ain/smartbanner.js) [![npm version](https://badge.fury.io/js/smartbanner.js.svg)](https://badge.fury.io/js/smartbanner.js) [![Bower version](https://badge.fury.io/bo/smartbanner.js.svg)](https://badge.fury.io/bo/smartbanner.js) [![Coverage Status](https://coveralls.io/repos/github/ain/smartbanner.js/badge.svg?branch=master)](https://coveralls.io/github/ain/smartbanner.js?branch=master)
 Customisable smart app banner for iOS and Android.
 
 ![smartbanner.js iOS screenshot](https://github.com/ain/smartbanner.js/raw/master/screenshot-ios.png) &nbsp; ![smartbanner.js Android screenshot](https://github.com/ain/smartbanner.js/raw/master/screenshot-android.png)
 
 ## Features
 
-- Pure JavaScript, no jQuery (12 KB in size)
-- ECMAScript 6 source
+- Populating smartbanner is as easy as [adding meta tags](#basic-usage), no JavaScript knowledge required
 - Default [Smart App Banner](https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/PromotingAppswithAppBanners/PromotingAppswithAppBanners.html) like design
-- Customisable design by using
+- Customisable info with i18n support and design by using
   - automatically generated `smartbanner--<platform>` class on wrapper
   - [custom design modifier](#custom-design-modifier) for externally defined styles or same design on all platforms
-- Fully customisable info
-- Close button that
-  - closes the banner
-  - sets cookie to keep banner closed
-    - for current session or [for defined time](#time-limited-close)
-    - at current path or [site-wide](#path-designated-close)
-- Platform-specific app icon URL
-- Platform-specific URL for _View_ button
-- jQuery Mobile and AngularJS compliance
+- Close button that closes the banner and sets cookie to keep banner closed
+  - for current session or [for defined time](#time-limited-close)
+  - at current path or [site-wide](#path-designated-close)
+- Platform-specific app icon and _View_ button
 - User Agent specific targeting
+- Pure JavaScript coming at 13 KB in minified size, no jQuery required
+- [Events](#events) emitted for [API](#smartbanner-api-use) implementations
+- ECMAScript 6 source
 
 ## Basic Usage
 
@@ -39,14 +36,15 @@ Customisable smart app banner for iOS and Android.
 <meta name="smartbanner:button-url-apple" content="https://ios/application-url">
 <meta name="smartbanner:button-url-google" content="https://android/application-url">
 <meta name="smartbanner:enabled-platforms" content="android,ios">
+<meta name="smartbanner:close-label" content="Close">
 <!-- End SmartBanner configuration -->
 ```
 
 Additionally, JavaScript and CSS has to be included:
 
 ```html
-<link rel="stylesheet" href="path/to/component/dist/smartbanner.min.css">
-<script src="path/to/component/dist/smartbanner.min.js"></script>
+<link rel="stylesheet" href="node_modules/smartbanner.js/dist/smartbanner.min.css">
+<script src="node_modules/smartbanner.js/dist/smartbanner.min.js"></script>
 ```
 
 ## Advanced usage
@@ -98,13 +96,13 @@ By default smartbanner would not reappear if closed. This can be prevented with 
 
 ### Path-designated close
 
-By default smartbanner would reappear if site path changes. Following example would keep smartbanner closed site-wide:
+Once closed smartbanner would reappear if site path changes. It is default behaviour.
+
+Following example would keep smartbanner closed site-wide (but only when user has actually closed it):
 
 ```html
 <meta name="smartbanner:hide-path" content="/">
 ```
-
-__Attention:__ keeping smartbanner closed site-wide once closed will become default behaviour as of `2.0.0`.
 
 ### Custom design modifier
 
@@ -126,6 +124,36 @@ smartbanner uses built-in platform-specific styles (e.g. `smartbanner--ios` or `
 
     which would add `smartbanner--ios` class on wrapper regardless of actual platform.
 
+### smartbanner API use
+
+By default smartbanner is added to DOM automatically. You can disable it with
+
+```html
+<meta name="smartbanner:api" content="true">
+```
+
+and add smartbanner to DOM manually:
+
+```js
+smartbanner.publish();
+```
+
+### Events
+
+Following events are being dispatched:
+
+| Event                  | Description                                                     |
+| :-----                 | :-----------                                                    |
+| `smartbanner.view`     | Dispatched when smartbanner is added to display                 |
+| `smartbanner.clickout` | Dispatched when smartbanner is clicked to navigate to app store |
+| `smartbanner.exit`     | Dispatched when smartbanner is closed                           |
+
+Example handler (closes smartbanner when user clicks to navigate to app store):
+
+```js
+document.addEventListener('smartbanner.clickout', smartbanner.exit);
+```
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
@@ -138,4 +166,4 @@ Cross-browser testing across all mobile platforms is powered by
 
 ## Licence
 
-Copyright © 2016-2018 Ain Tohvri, contributors. Licenced under [GPL-3](https://raw.githubusercontent.com/ain/smartbanner.js/master/LICENSE).
+Copyright © 2016-2019 Ain Tohvri, contributors. Licenced under [GPL-3](https://raw.githubusercontent.com/ain/smartbanner.js/master/LICENSE).
