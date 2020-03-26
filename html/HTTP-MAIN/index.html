@@ -587,14 +587,14 @@
 			jsonp : 'json.wrf'
 			});
 			//We need to create something for the root as well.
-			var marker = L.marker([-4.226497,0], {icon: mark, zIndexOffset:-1000});
-			marker.on("click", function() {
-				console.log("jjkjk");
-				markofun(1,"Root"," "," ");
-			})
+			//var marker = L.marker([-4.226497,0], {icon: mark, zIndexOffset:-1000});
+			//marker.on("click", function() {
+			//	console.log("jjkjk");
+			//	markofun(1,"Root"," "," ");
+			//})
 			//create and bind content to marker (TODO)
 			//bind marker to markers group
-			markers.addLayer(marker);
+			//markers.addLayer(marker);
 			markers.addTo(map);
 		}; 
 	</script>
@@ -1027,7 +1027,7 @@
 							}
 
 						}
-						polyline = L.polyline(latlngs, {color: 'red', clickable:false, weight:6});
+						polyline = L.polyline(latlngs, {color: 'red', clickable:false, weight:6,opacity:0.5});
 						polyline.addTo(map);
 						if (focus) map.fitBounds(polyline.getBounds(), {paddingTopLeft:[20,140], paddingBottomRight:[0,120]});
 						markersRoute.addTo(map);
@@ -1093,7 +1093,7 @@
 		$('#myModal').modal('show');
 		$('#viewfullancestry').on("click", function() {
 			taxidFrom = taxi;
-			taxidTo = "1";
+			taxidTo = "10239";
 			$("#myModal").modal("hide");
 			$("#mainsearch").hide();					
 			$('#searchinput2').val(spna + comna);
