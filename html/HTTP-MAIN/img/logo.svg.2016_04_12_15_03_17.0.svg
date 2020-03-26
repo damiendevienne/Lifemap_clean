@@ -1740,9 +1740,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="-6444.054"
-     inkscape:cy="-1962.0889"
+     inkscape:zoom="0.9899495"
+     inkscape:cx="-6585.9749"
+     inkscape:cy="-1938.4582"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -1767,51 +1767,6 @@
      inkscape:label="Calque 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <g
-       id="g5981-0"
-       transform="rotate(180,-5699.1122,807.10648)">
-      <g
-         id="g4579"
-         transform="translate(-11.428571,-63.571429)"
-         inkscape:export-xdpi="75.690002"
-         inkscape:export-ydpi="75.690002">
-        <rect
-           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ffffff;stroke:none;stroke-width:0.26381925;marker:none;enable-background:accumulate"
-           id="rect4953-8-6-6-6"
-           width="178.34822"
-           height="178.34822"
-           x="-4690.7651"
-           y="-1431.4592"
-           ry="34.113892" />
-        <rect
-           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient4492);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:12;marker:none;enable-background:accumulate"
-           id="rect2990-7-6-1-82"
-           width="173.13658"
-           height="173.13658"
-           x="-4688.123"
-           y="-1428.4152"
-           ry="34.918304" />
-        <path
-           id="path2985-2-5-4-5-3-8-9-5-3-9-5"
-           style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient4249);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:12;marker:none;enable-background:accumulate"
-           d="M 338.93835,325.394 C 374.61161,262.86492 352.8407,183.25615 290.3115,147.58286 227.78235,111.90972 148.17359,133.6807 112.50045,196.20985 c 0,0 0,0 0,0 M 338.93835,325.394 c -7.48389,13.11801 -64.24065,-5.16658 -126.76975,-40.8399 -62.5291,-35.67315 -107.15209,-75.22622 -99.66815,-88.34425 0,0 0,0 0,0"
-           inkscape:connector-curvature="0"
-           clip-path="url(#clipPath4015-3-3-1-0)"
-           transform="matrix(0.72015326,0,0,0.72015326,-4753.5951,-1575.2068)" />
-        <g
-           id="g4103-8-2-2-4"
-           clip-path="url(#clipPath4113-8-2-6-1)"
-           style="filter:url(#filter4495-7-5-2-3)"
-           transform="matrix(0.72015326,0,0,0.72015326,-4753.5951,-1575.2068)">
-          <path
-             sodipodi:nodetypes="cc"
-             inkscape:connector-curvature="0"
-             id="path2996-4-1-6-4"
-             d="M 419.19506,389.77761 C 393.92787,236.89982 713.57857,183.15162 713.57857,183.15162"
-             style="fill:none;stroke:#ffffff;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-        </g>
-      </g>
-    </g>
     <rect
        style="opacity:1;fill:#cccccc;fill-opacity:1;stroke:#ffffff;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect9445"
@@ -2086,19 +2041,11 @@
            x="-5708.3179"
            y="916.46161">Lifemap</tspan></text>
     </g>
-    <rect
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect4356-2"
-       width="635.71429"
-       height="198.57143"
-       x="-5897.2231"
-       y="2275.2368"
-       ry="0" />
     <g
        id="g4341-9"
-       transform="translate(39.854691,1497.3058)">
+       transform="matrix(0.2589928,0,0,0.2589928,-5199.1412,2863.7058)">
       <g
-         transform="translate(-1221.0278,2219.5019)"
+         transform="translate(-195.0754,2475.99)"
          id="g5981-3">
         <rect
            style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ffffff;stroke:none;stroke-width:0.26381925;marker:none;enable-background:accumulate"
@@ -2167,14 +2114,14 @@
       <text
          xml:space="preserve"
          style="font-style:normal;font-weight:normal;line-height:0%;font-family:Helvetica;-inkscape-font-specification:Helvetica;letter-spacing:0px;word-spacing:0px;fill:#9ca7be;fill-opacity:1;stroke:none"
-         x="-5708.3179"
-         y="916.46161"
+         x="-4699.9165"
+         y="1188.551"
          id="text5238-0"><tspan
            style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:113.63267517px;line-height:1.25;font-family:'Proxima Nova';-inkscape-font-specification:'Proxima Nova Light';fill:#9ca7be;fill-opacity:1"
            sodipodi:role="line"
            id="tspan5240-6"
-           x="-5708.3179"
-           y="916.46161">Lifemap</tspan></text>
+           x="-4699.9165"
+           y="1188.551">by Lifemap</tspan></text>
     </g>
     <g
        transform="translate(420.90985,-442.67082)"
@@ -3086,27 +3033,77 @@
            sodipodi:nodetypes="cc" />
       </g>
     </g>
-    <text
-       id="text5238-0-6"
-       y="2982.4939"
-       x="-6852.1108"
-       style="font-style:normal;font-weight:normal;font-size:5.24213076px;line-height:0%;font-family:Helvetica;-inkscape-font-specification:Helvetica;letter-spacing:0px;word-spacing:0px;fill:#9ca7be;fill-opacity:1;stroke:none;stroke-width:0.43684423"
-       xml:space="preserve"><tspan
-         id="tspan3476"
-         y="2982.4939"
-         x="-6852.1108"
-         sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:49.63977814px;line-height:1.25;font-family:'Proxima Nova';-inkscape-font-specification:'Proxima Nova Light';fill:#9ca7be;fill-opacity:1;stroke-width:0.43684423">VIRUS</tspan></text>
-    <text
-       id="text5238-0-6-4"
-       y="3018.4385"
-       x="-6837.3237"
-       style="font-style:normal;font-weight:normal;font-size:5.24213076px;line-height:0%;font-family:Helvetica;-inkscape-font-specification:Helvetica;letter-spacing:0px;word-spacing:0px;fill:#9ca7be;fill-opacity:1;stroke:none;stroke-width:0.43684423"
-       xml:space="preserve"><tspan
-         id="tspan3476-9"
-         y="3018.4385"
-         x="-6837.3237"
-         sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:49.63977814px;line-height:1.25;font-family:'Proxima Nova';-inkscape-font-specification:'Proxima Nova Light';fill:#9ca7be;fill-opacity:1;stroke-width:0.43684423">map</tspan></text>
+    <g
+       id="g545"
+       inkscape:export-xdpi="80.739998"
+       inkscape:export-ydpi="80.739998">
+      <g
+         transform="rotate(180,-5699.1122,807.10648)"
+         id="g5981-0">
+        <g
+           inkscape:export-ydpi="75.690002"
+           inkscape:export-xdpi="75.690002"
+           transform="translate(-11.428571,-63.571429)"
+           id="g4579">
+          <rect
+             ry="34.113892"
+             y="-1431.4592"
+             x="-4690.7651"
+             height="178.34822"
+             width="178.34822"
+             id="rect4953-8-6-6-6"
+             style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#ffffff;stroke:none;stroke-width:0.26381925;marker:none;enable-background:accumulate" />
+          <rect
+             ry="34.918304"
+             y="-1428.4152"
+             x="-4688.123"
+             height="173.13658"
+             width="173.13658"
+             id="rect2990-7-6-1-82"
+             style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient4492);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:12;marker:none;enable-background:accumulate" />
+          <path
+             transform="matrix(0.72015326,0,0,0.72015326,-4753.5951,-1575.2068)"
+             clip-path="url(#clipPath4015-3-3-1-0)"
+             inkscape:connector-curvature="0"
+             d="M 338.93835,325.394 C 374.61161,262.86492 352.8407,183.25615 290.3115,147.58286 227.78235,111.90972 148.17359,133.6807 112.50045,196.20985 c 0,0 0,0 0,0 M 338.93835,325.394 c -7.48389,13.11801 -64.24065,-5.16658 -126.76975,-40.8399 -62.5291,-35.67315 -107.15209,-75.22622 -99.66815,-88.34425 0,0 0,0 0,0"
+             style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#linearGradient4249);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:12;marker:none;enable-background:accumulate"
+             id="path2985-2-5-4-5-3-8-9-5-3-9-5" />
+          <g
+             transform="matrix(0.72015326,0,0,0.72015326,-4753.5951,-1575.2068)"
+             style="filter:url(#filter4495-7-5-2-3)"
+             clip-path="url(#clipPath4113-8-2-6-1)"
+             id="g4103-8-2-2-4">
+            <path
+               style="fill:none;stroke:#ffffff;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+               d="M 419.19506,389.77761 C 393.92787,236.89982 713.57857,183.15162 713.57857,183.15162"
+               id="path2996-4-1-6-4"
+               inkscape:connector-curvature="0"
+               sodipodi:nodetypes="cc" />
+          </g>
+        </g>
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:5.04237795px;line-height:0%;font-family:Helvetica;-inkscape-font-specification:Helvetica;letter-spacing:0px;word-spacing:0px;fill:#9ca7be;fill-opacity:1;stroke:none;stroke-width:0.42019817"
+         x="-6860.644"
+         y="2988.4326"
+         id="text5238-0-6"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:47.74824142px;line-height:1.25;font-family:'Proxima Nova';-inkscape-font-specification:'Proxima Nova Semi-Bold';letter-spacing:3.78024483px;fill:#9ca7be;fill-opacity:1;stroke-width:0.42019817"
+           sodipodi:role="line"
+           x="-6860.644"
+           y="2988.4326"
+           id="tspan3476">VIRUS</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:5.24213076px;line-height:0%;font-family:Helvetica;-inkscape-font-specification:Helvetica;letter-spacing:0px;word-spacing:0px;fill:#9ca7be;fill-opacity:1;stroke:none;stroke-width:0.43684423"
+         x="-6800.5796"
+         y="3027.1528"
+         id="text5238-0-6-4"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:49.63977814px;line-height:1.25;font-family:'Proxima Nova';-inkscape-font-specification:'Proxima Nova Light';fill:#9ca7be;fill-opacity:1;stroke-width:0.43684423"
+           sodipodi:role="line"
+           x="-6800.5796"
+           y="3027.1528"
+           id="tspan3476-9">map</tspan></text>
+    </g>
   </g>
 </svg>
