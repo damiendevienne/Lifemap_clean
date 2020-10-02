@@ -42,3 +42,5 @@ serotype	sérotype
 subvariety	sous-variété
 morph	morph
 genotype	génotype
+pathogroup	pathogroupe
+
