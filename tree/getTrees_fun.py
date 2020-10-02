@@ -1,28 +1,25 @@
 #!/usr/bin/python
 
-	# from ete3 import Tree
-	# import os
-	# import cPickle as pickle
+# from ete3 import Tree
+import os
+# import cPickle as pickle
 
-def getTheTrees(): 
-	##DOWNLOAD taxdump and store in taxo folder
-	##DOWNLOAD TAXREF BY HAND! and put it in taxo/
-
+def getTheTrees():
 	class Trans:
 		def __init__(self):
 			self.common_name_FR = []
 
-
 	print "Getting french translations..."
+	os.system("sudo wget -O taxo/TAXONOMIC-VERNACULAR-FR.txt https://github.com/damiendevienne/taxonomy-fr/blob/master/TAXONOMIC-VERNACULAR-FR.txt?raw=true")
 	TRANS = {} ##translations in french
-	with open("taxo/TAXREFv11.txt") as f:  
+	with open("taxo/TAXONOMIC-VERNACULAR-FR.txt") as f:
 		for line in f:
-			sciname = line.split("\t")[14]
-			comnameFR = line.split("\t")[19]
-			if (TRANS.has_key(sciname)==False and line.split("\t")[19]!=''):
+			sciname = line.split("\t")[0]
+			comnameFR = line.split("\t")[1].rstrip()
+			if (TRANS.has_key(sciname)==False):
 				TRANS[sciname] = Trans()
-			if (line.split("\t")[19]!=''):
-				TRANS[sciname].common_name_FR.append(comnameFR)
+			TRANS[sciname].common_name_FR.append(comnameFR)
+
 
 	#get translation of ranks
 	print "\nGetting rank names in french..."
@@ -95,10 +92,12 @@ def getTheTrees():
 		for line in fp:
 			dad = line.split("|")[1].replace("\t","")
 			son = line.split("|")[0].replace("\t","")
-			rank = line.split("|")[2].replace("\t","")
+			rank = line.split("|")[2].replace("\t","") ##rank OF THE SON!
 			if (T.has_key(dad)==False):
 				T[dad] = Tree()
 				T[dad].name = dad
+#				T[dad].rank = rank
+#				T[dad].rank_FR = RANKS[rank]
 				T[dad].taxid = dad
 				T[dad].sci_name = ATTR[dad].sci_name
 				T[dad].common_name = ATTR[dad].common_name
@@ -119,8 +118,12 @@ def getTheTrees():
 			else:
 				if (hasattr(T[son], 'rank')==False):
 					T[son].rank = rank
-#					T[son].rank_FR = RANKS[rank]
+					T[son].rank_FR = RANKS[rank]
 			T[dad].add_child(T[son])
+	#Desambiguation
+	T['54972'].rank_FR = "" #because those are birds, not "sabline" flowers
+
+
 	return T
 
 # ##we save T entirely so that we do not hacve to write it to a file.
