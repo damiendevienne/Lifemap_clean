@@ -32,3 +32,13 @@ subcohort	sous-cohorte
 section	section
 series	série
 subsection	sous-section
+strain	souche
+serogroup	sérogroupe
+biotype	biotype
+clade	clade
+forma specialis	forma specialis
+isolate	isolat
+serotype	sérotype
+subvariety	sous-variété
+morph	morph
+genotype	génotype
