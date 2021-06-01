@@ -30,6 +30,13 @@ def getTheTrees():
 			rank_fr = line.split("\t")[1].rstrip() ##to remove \n
 			RANKS[rank_en] = rank_fr
 
+	#get list of extinct species
+	EXT = [];
+	with open("taxo/citations.dmp") as f:
+		for line in f:
+			if (line.split("\t")[2]=="extinct"):
+				EXT = line.split("\t")[12].split(" ");
+
 
 	class Taxid:
 		def __init__(self):
@@ -40,6 +47,7 @@ def getTheTrees():
 			self.common_name = []
 #			self.common_name_FR = ""
 			self.common_name_FR = []
+			self.extinct = "F"
 
 	cpt = 0
 	cptfr = 0
@@ -80,6 +88,14 @@ def getTheTrees():
 				# else: 
 				# 	ATTR[taxid].common_name = tid_val
 
+	#add info about extinction state in the ATTR objects
+	for x in EXT:
+		if (ATTR.has_key(x)==True):
+			ATTR[x].extinct = "T"
+
+
+
+
 
 	T = {}
 
@@ -104,6 +120,8 @@ def getTheTrees():
 				T[dad].synonym = ATTR[dad].synonym
 				T[dad].authority = ATTR[dad].authority
 				T[dad].common_name_FR = ATTR[dad].common_name_FR
+				##extinct status of dad
+				T[dad].extinct = ATTR[dad].extinct
 			if (T.has_key(son)==False):
 				T[son] = Tree()
 				T[son].name = son
@@ -115,6 +133,8 @@ def getTheTrees():
 				T[son].synonym = ATTR[son].synonym
 				T[son].authority = ATTR[son].authority
 				T[son].common_name_FR = ATTR[son].common_name_FR
+				T[son].extinct = ATTR[son].extinct
+
 			else:
 				if (hasattr(T[son], 'rank')==False):
 					T[son].rank = rank

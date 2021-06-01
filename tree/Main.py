@@ -6,6 +6,8 @@ from argparse import ArgumentParser, FileType ##for options handling
 parser = ArgumentParser(description='Perform all Lifemap tree analysis cleaning previous data if any.')
 parser.add_argument('--lang', nargs='?', const='EN', default='EN', help='Language chosen. FR for french, EN (default) for english', choices=['EN','FR'])
 parser.add_argument('--simplify', nargs='?', const='True', default='False', help='Should the tree be simplified by removing environmental and unindentified species?', choices=['True','False'])
+parser.add_argument('--removeextinct', nargs='?', const='True', default='False', help='Should extinct species be removed from the tree?', choices=['True','False'])
+
 args = parser.parse_args()
 
 
@@ -20,17 +22,17 @@ os.system("mkdir genomes") ##if not exists
 ## 1. get the tree and update database
 print '\NCREATING DATABASE'
 print '  Doing Archaeal tree...'
-os.system('python Traverse_To_Pgsql_2.py 1 1 --simplify %s --lang %s'%(args.simplify, args.lang));
+os.system('python Traverse_To_Pgsql_2.py 1 1 --simplify %s --lang %s --removeextinct %s'%(args.simplify, args.lang, args.removeextinct));
 print '  ...Done'
 with open('tempndid', 'r') as f:
     ndid = f.readline()
 print '  Doing Eukaryotic tree... start at id: %s' % ndid
-os.system('python Traverse_To_Pgsql_2.py 2 %s --updatedb False --simplify %s --lang %s'%(ndid, args.simplify, args.lang)) ;
+os.system('python Traverse_To_Pgsql_2.py 2 %s --updatedb False --simplify %s --lang %s --removeextinct %s'%(ndid, args.simplify, args.lang, args.removeextinct)) ;
 print '  ...Done'
 with open('tempndid', 'r') as f:
     ndid = f.readline()
 print '  Doing Bact tree... start at id:%s ' % ndid
-os.system('python Traverse_To_Pgsql_2.py 3 %s --updatedb False --simplify %s --lang %s'%(ndid, args.simplify, args.lang));
+os.system('python Traverse_To_Pgsql_2.py 3 %s --updatedb False --simplify %s --lang %s --removeextinct %s'%(ndid, args.simplify, args.lang, args.removeextinct));
 print '  ...Done'
 
 ## 2. Get additional info from NCBI

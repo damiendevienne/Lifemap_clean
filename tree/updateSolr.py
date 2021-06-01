@@ -25,6 +25,11 @@ print '          Deleting addi...\n'
 delete2 = "curl http://localhost:8983/solr/addi/update?commit=true -d '<delete><query>*:*</query></delete>'"
 os.system(delete2)
 print '          Addi successfully deleted\n'
+print '          Deleting wiki...\n'
+delete3 = "curl http://localhost:8983/solr/wiki/update?commit=true -d '<delete><query>*:*</query></delete>'"
+os.system(delete3)
+print '          wiki successfully deleted\n'
+
 
 
 # 3. Uploading files 
@@ -38,9 +43,18 @@ for i in range(1,4):
     uupadtesolr2 = "sudo su - solr -c '/opt/solr/bin/post -c addi /usr/local/lifemap/ADDITIONAL.%d.json'" % i
     os.system(uupadtesolr2)
     print '          -> Additions %d successfully uploaded.' % i 
-
+   
+## uploading wiki description files
+print '...uploading wiki descriptions...\n'
+updatesolrwiki1 = "sudo su - solr -c '/opt/solr/bin/post -c wiki /usr/local/lifemap/wikipediadata/archees/*.json'"
+updatesolrwiki2 = "sudo su - solr -c '/opt/solr/bin/post -c wiki /usr/local/lifemap/wikipediadata/bacteries/*.json'"
+updatesolrwiki3 = "sudo su - solr -c '/opt/solr/bin/post -c wiki /usr/local/lifemap/wikipediadata/eukar/*.json'"
+os.system(updatesolrwiki1)
+os.system(updatesolrwiki2)
+os.system(updatesolrwiki3)
 print '        All files successfully uploaded\n'
-    
+
+
 # 4. Restarting solr 
 print '  (4/4) Restarting Solr...\n'
 os.system("sudo service solr restart")

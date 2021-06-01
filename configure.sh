@@ -96,6 +96,9 @@ sudo service solr start
 
 sudo su - solr -c "/opt/solr/bin/solr create -c addi -n data_driven_schema_configs"
 sudo su - solr -c "/opt/solr/bin/solr create -c taxo -n data_driven_schema_configs"
+#NEW create collection for wiki descrtiptions
+sudo su - solr -c "/opt/solr/bin/solr create -c wiki -n data_driven_schema_configs"
+
 sudo cp conf/solrconfig.xml /var/solr/data/taxo/conf/
 sudo cp conf/schema.xml /var/solr/data/taxo/conf/
 sudo rm /var/solr/data/taxo/conf/managed-schema
@@ -110,3 +113,14 @@ sudo ./update_server.sh
 
 ##COPY LIFEMAP CODE TO DEDICATED FOLDER
 sudo cp -r tree/* /usr/local/lifemap/
+
+##DEAL WITH WIKIDATA
+(cd /usr/local/lifemap/ ; sudo git clone https://github.com/damiendevienne/lifemap-wikidata.git)
+sudo mkdir /usr/local/lifemap/wikipediadata/
+sudo mkdir /usr/local/lifemap/wikipediadata/archees
+sudo mkdir /usr/local/lifemap/wikipediadata/bacteries
+sudo mkdir /usr/local/lifemap/wikipediadata/eukar
+sudo tar xvzf /usr/local/lifemap/lifemap-wikidata/data/archees_jsonfile.tar.gz --directory /usr/local/lifemap/wikipediadata/archees/
+sudo tar xvzf /usr/local/lifemap/lifemap-wikidata/data/bacteries_jsonfile.tar.gz --directory /usr/local/lifemap/wikipediadata/bacteries/
+sudo tar xvzf /usr/local/lifemap/lifemap-wikidata/data/eukar_jsonfile.tar.gz --directory /usr/local/lifemap/wikipediadata/eukar/
+
