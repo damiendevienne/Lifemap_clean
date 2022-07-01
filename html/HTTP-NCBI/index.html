@@ -332,7 +332,7 @@
 						<p><i class='fa fa-file-text-o fa-fw  fa-lg' style='color:grey;'></i>&nbsp;<u>Reference:</u> de Vienne DM (2016) Lifemap: Exploring the Entire Tree of Life. <i>PLOS Biology</i> <b>14</b>(12):e2001624. <a href="https://doi.org/10.1371/journal.pbio.2001624">https://doi.org/10.1371/journal.pbio.2001624"</a></p>
 					</div>
 					<p  style="font-size: x-small; text-align: center;"><i>For any question, remark, suggestion, or bug report, please contact Damien de Vienne: damien.de-vienne@univ-lyon1.fr</i><br>
-					<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>&nbsp;<span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Lifemap</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://lbbe.univ-lyon1.fr/-de-Vienne-Damien-.html" property="cc:attributionName" rel="cc:attributionURL">Damien de Vienne / CNRS</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.<br></p>
+					<!--<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>&nbsp;<span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Lifemap</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://lbbe.univ-lyon1.fr/-de-Vienne-Damien-.html" property="cc:attributionName" rel="cc:attributionURL">Damien de Vienne / CNRS</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.<br></p>-->
 					<div class="modal-footer">
 					  <div style="text-align:center;">
 					    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/2c/CNRS.svg/200px-CNRS.svg.png" height="40px">
@@ -445,11 +445,11 @@
 	<script src="server-address.js" type="text/javascript"></script>
 	<!--HERE IS WHAT CONCERNS THE MAP AND MAP FUNCTION (focus, etc...)-->
 	<!-- FOR TREE MANIPULATION -->
-	<script src="http://jnuno.com/tree-model-js/vendor/jnuno/TreeModel-min.js"></script>
+	<!--<script src="http://jnuno.com/tree-model-js/vendor/jnuno/TreeModel-min.js"></script>-->
 
     <script>
 		var map = L.map('map', {zoomControl: false, attributionControl: false});
-		var tolUrl="http://"+ServerAddress+"/osm_tiles/{z}/{x}/{y}.png";
+		var tolUrl="https://"+ServerAddress+"/osm_tiles/{z}/{x}/{y}.png";
 		var tol = new L.TileLayer(tolUrl, {minZoom: 4, maxZoom: 42});
 		map.addLayer(tol);
 		map.setView([-5,0], 5);
@@ -644,7 +644,7 @@
 				}
 			}
 			//this lists all required taxid, each once only. From those we will get lat/lon coordinates
-			var URL_PREFIX_FINAL = "http://"+ServerAddress+"/solr/taxo/select?q=taxid:(";
+			var URL_PREFIX_FINAL = "https://"+ServerAddress+"/solr/taxo/select?q=taxid:(";
 			var URL_SUFFIX = ")&wt=json&rows=10000";
 			var URL = URL_PREFIX_FINAL + alreadymet.join(' ') + URL_SUFFIX;
 			$.ajax({
@@ -838,7 +838,7 @@
 
 	    var zoomTo = function(taxid) {
 //			$("#route-details").hide();
-	  		var url = "http://"+ServerAddress+"/solr/taxo/select?q=taxid:"+taxid+"&wt=json&rows=1000";
+	  		var url = "https://"+ServerAddress+"/solr/taxo/select?q=taxid:"+taxid+"&wt=json&rows=1000";
 			if (taxid === 1) {
 			  map.setView( L.latLng([-4.226497,0]),7);
 			}
@@ -895,7 +895,7 @@
 								}
 								getmultiRoute(RESUROUTES, action);
 								RESUFINAL = RESUFINAL.join(' ')
-								var URL_PREFIX_FINAL = "http://"+ServerAddress+"/solr/taxo/select?q=taxid:(";
+								var URL_PREFIX_FINAL = "https://"+ServerAddress+"/solr/taxo/select?q=taxid:(";
 								var URL_SUFFIX = ")&wt=json&rows=1000";
 								var URL = URL_PREFIX_FINAL + RESUFINAL + URL_SUFFIX;
 								console.log(URL)
@@ -951,7 +951,7 @@
 			var lon2 = bb._northEast.lng;
 			var lat1 = bb._southWest.lat;
 			var lat2 = bb._northEast.lat;
-			var URL2 = "http://"+ServerAddress+"/solr/taxo/select?q=*:*&fq=zoom:[0 TO " + z + "]&fq=lat:[" + lat1 + " TO " + lat2 + "]&fq=lon:[" + lon1 + " TO " + lon2 + "]&wt=json&rows=1000";
+			var URL2 = "https://"+ServerAddress+"/solr/taxo/select?q=*:*&fq=zoom:[0 TO " + z + "]&fq=lat:[" + lat1 + " TO " + lat2 + "]&fq=lon:[" + lon1 + " TO " + lon2 + "]&wt=json&rows=1000";
 			$.ajax({
 				url : URL2,
 				success : function(data) {
@@ -1028,8 +1028,8 @@
 		//SEARCH FUNCTIONS
 		$(function() {
 			var str;
-			var URL_PREFIX = "http://"+ServerAddress+"/solr/taxo/suggesthandler?suggest.q=";
-			var URL_PREFIX_FINAL = "http://"+ServerAddress+"/solr/taxo/select?q=taxid:";
+			var URL_PREFIX = "https://"+ServerAddress+"/solr/taxo/suggesthandler?suggest.q=";
+			var URL_PREFIX_FINAL = "https://"+ServerAddress+"/solr/taxo/select?q=taxid:";
 			var URL_SUFFIX = "&wt=json";
 			$("#searchinput").autocomplete({
 				source : function(request, response) {
@@ -1130,8 +1130,8 @@
 		});
 		$(function() {
 			var str;
-			var URL_PREFIX = "http://"+ServerAddress+"/solr/taxo/suggesthandler?suggest.q=";
-			var URL_PREFIX_FINAL = "http://"+ServerAddress+"/solr/taxo/select?q=taxid:";
+			var URL_PREFIX = "https://"+ServerAddress+"/solr/taxo/suggesthandler?suggest.q=";
+			var URL_PREFIX_FINAL = "https://"+ServerAddress+"/solr/taxo/select?q=taxid:";
 			var URL_SUFFIX = "&wt=json";
 			$("#searchinput2").autocomplete({
 				source : function(request, response) {
@@ -1204,8 +1204,8 @@
 		});
 		$(function() {
 			var str;
-			var URL_PREFIX = "http://"+ServerAddress+"/solr/taxo/suggesthandler?suggest.q=";
-			var URL_PREFIX_FINAL = "http://"+ServerAddress+"/solr/taxo/select?q=taxid:";
+			var URL_PREFIX = "https://"+ServerAddress+"/solr/taxo/suggesthandler?suggest.q=";
+			var URL_PREFIX_FINAL = "https://"+ServerAddress+"/solr/taxo/select?q=taxid:";
 			var URL_SUFFIX = "&wt=json";
 			$("#searchinput3").autocomplete({
 				source : function(request, response) {
@@ -1297,7 +1297,7 @@
 
 		function allRoutes(multiTaxid) {
 			return new Promise(function (resolve, reject) {
-				var url = "http://"+ServerAddress+"/solr/addi/select?q=*:*&fq=taxid:("+multiTaxid+")&wt=json&rows=1000";
+				var url = "https://"+ServerAddress+"/solr/addi/select?q=*:*&fq=taxid:("+multiTaxid+")&wt=json&rows=1000";
 				$.ajax({
 				    url : url,
 				    success : function(data) {
@@ -1315,7 +1315,7 @@
 			//get infos
 			taxidFrom = taxidFrom.replace(/\s+/g, '');
 			taxidTo = taxidTo.replace(/\s+/g, '');
-			var url = "http://"+ServerAddress+"/solr/addi/select?q=*:*&fq=taxid:("+taxidFrom+" "+taxidTo+")&wt=json&rows=1000";
+			var url = "https://"+ServerAddress+"/solr/addi/select?q=*:*&fq=taxid:("+taxidFrom+" "+taxidTo+")&wt=json&rows=1000";
 			$.ajax({
 			    url : url,
 			    success : function(data) {
@@ -1336,7 +1336,7 @@
 					}
 					var mrca = getMrca(asc1,asc2);
 					routeq = route.toString().replace(/,/g,' ');
-					url2 = "http://"+ServerAddress+"/solr/taxo/select?q=*:*&fq=taxid:(" + routeq + ")&wt=json&rows=10000";
+					url2 = "https://"+ServerAddress+"/solr/taxo/select?q=*:*&fq=taxid:(" + routeq + ")&wt=json&rows=10000";
 
 					$.ajax({
 					    url : url2,
@@ -1468,10 +1468,10 @@
 	var getNbdesc = function(taxid) {
 		$("#NBDESC").empty();
 		if (taxid===1) {
-			var url = "http://"+ServerAddress+"/solr/taxo/select?q=taxid:(2 2157 2759)&wt=json";
+			var url = "https://"+ServerAddress+"/solr/taxo/select?q=taxid:(2 2157 2759)&wt=json";
 		}
 		else {
-			var url = "http://"+ServerAddress+"/solr/taxo/select?q=taxid:"+taxid+"&wt=json";
+			var url = "https://"+ServerAddress+"/solr/taxo/select?q=taxid:"+taxid+"&wt=json";
 		}
   		$.ajax({
 			url : url,
@@ -1498,7 +1498,7 @@
 		taxi = taxid;
 		spna = spname;
 		comna = comname;	
-		var treeFileAddr = "http://"+ServerAddress+"/trees/" + taxid.replace(/\s+/g, '') + ".tre";
+		var treeFileAddr = "https://"+ServerAddress+"/trees/" + taxid.replace(/\s+/g, '') + ".tre";
 		$('#modaltitle').empty();
 		$('#modalbody-text').empty();	
 		$('#modalbody-pict').empty();
@@ -1537,7 +1537,7 @@
 			text +="<li>Number of descendants: <b>"+nbdesc+"</b></li>";		
 		}
 		text +="</ul><ul>"
-		text +='<li>Explore <b>' + spname + '</b> on <a href="http://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=' + taxid.replace(/\s+/g, '') + '&mode=info" target="_blank">NCBI</a></li>';
+		text +='<li>Explore <b>' + spname + '</b> on <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=' + taxid.replace(/\s+/g, '') + '&mode=info" target="_blank">NCBI</a></li>';
 		//if (taxid!="1") {
 		//	text += '<li><a href="' + treeFileAddr + '" download>Download</a> the complete NCBI subtree of <b>' + spname + '</b> in Newick Extended format (NHX) </li>';
 		//}
@@ -1578,7 +1578,7 @@
 			var lon2 = bb._northEast.lng;
 			var lat1 = bb._southWest.lat;
 			var lat2 = bb._northEast.lat;
-			var URL2 = "http://"+ServerAddress+"/solr/taxo/select?q=*:*&fq=zoom:[0 TO " + z + "]&fq=lat:[" + lat1 + " TO " + lat2 + "]&fq=lon:[" + lon1 + " TO " + lon2 + "]&wt=json&rows=1000";
+			var URL2 = "https://"+ServerAddress+"/solr/taxo/select?q=*:*&fq=zoom:[0 TO " + z + "]&fq=lat:[" + lat1 + " TO " + lat2 + "]&fq=lon:[" + lon1 + " TO " + lon2 + "]&wt=json&rows=1000";
 			$.ajax({
 				url : URL2,
 				success : function(data) {
@@ -1588,7 +1588,7 @@
 					$.each(ok, function( index, value ) {
 						var latlong = new L.LatLng(ok[index].lat[0], ok[index].lon[0]);
 						var taxid = String(ok[index].taxid[0]);
-						var URL3 = "http://"+ServerAddress+"/solr/addi/select?q=*:*&fq=taxid:"+taxid+"&wt=json";
+						var URL3 = "https://"+ServerAddress+"/solr/addi/select?q=*:*&fq=taxid:"+taxid+"&wt=json";
 						$.ajax({
 							url:URL3,
 							success : function(data2) {
