@@ -60,9 +60,9 @@ print '  Done... '
 # 5. get and copy date of update to /var/www/html
 os.system('sudo ./getDateUpdate.sh')
 
-## 6. Remove old tiles
+## 6. Remove ALL old tiles
 print '  Deleting old tiles... '
-os.system('sudo rm -r /var/lib/mod_tile/default/')
+os.system('sudo rm -r /var/lib/mod_tile/*')
 
 ##7. Get New coordinates for generating tiles
 os.system('python GetAllTilesCoord.py')
@@ -73,7 +73,7 @@ os.system("sudo service renderd restart")
 os.system("sudo service renderdlist start")
 
 ##9. Compute tiles for the 5 first zoom levels ON 7 THREADS
-os.system("/opt/mod_tile/render_list -a -z 0 -Z 8 -n 7")
+os.system("sudo ./preRenderTiles.sh")
 
 
 
