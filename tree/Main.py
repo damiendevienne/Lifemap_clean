@@ -46,6 +46,11 @@ print '  ...Done'
 #os.system('python StoreWholeNcbiInSolr.py')
 #print '  ...Done'
 
+## 2.2. Merge Additionaljson and TreeFeatures json
+print '  Merging jsons...'
+os.system('python3 CombineJsons.py')
+print '  ...Done ' 
+
 
 ## 3. Update Solr informations
 print '  Updating Solr... '
