@@ -26,6 +26,12 @@ sudo apt-get --yes install libcairomm-1.0-dev apache2 apache2-dev libagg-dev lib
 sudo apt-get --yes install postgresql postgresql-contrib postgis postgresql-10-postgis-2.4
 sudo apt-get --yes install gdal-bin libgdal-dev libmapnik-dev mapnik-utils python-mapnik
 sudo apt-get --yes install python-numpy python-qt4 python-lxml python-six python-pip
+sudo apt-get --yes install r-base-core
+
+##INSTALL R PACKAGE JSONLITE
+wget -P /tmp/ https://cran.r-project.org/src/contrib/Archive/jsonlite/jsonlite_1.8.5.tar.gz
+Rscript -e "install.packages('/tmp/jsonlite_1.8.5.tar.gz', lib='/tmp/')"
+
 
 ##CONFIGURE POSTGRESQL/POSTGIS USER AND DATABASE
 sudo -u postgres psql -c "DROP DATABASE IF EXISTS tree;"
@@ -71,9 +77,6 @@ sudo systemctl enable renderdlist
 sudo systemctl daemon-reload
 sudo systemctl start renderd
 sudo systemctl enable renderd
-
-
-
 
 ##CONFIGURE APACHE
 sudo service apache2 reload
