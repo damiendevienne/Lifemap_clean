@@ -13,13 +13,17 @@ def MergeJsons(f1,f2, output):
 	dict1 = json.loads(data1)
 	dict2 = json.loads(data2)
 
+	keys_to_keep1 = ['taxid', 'sci_name','zoom','lat','lon']
+	dict1_2 = [{key: item[key] for key in keys_to_keep1 if key in item} for item in dict1]
+	keys_to_keep2 = ['taxid', 'ascend']
+	dict2_2 = [{key: item[key] for key in keys_to_keep2 if key in item} for item in dict2]
 
-	dict2_map = {d['taxid']: d for d in dict2}
+	dict2_map = {d['taxid']: d for d in dict2_2}
 
 	result = []
 
 	# Iterate over each dictionary in dict1 and merge with the corresponding dictionary from dict2_map
-	for d1 in dict1:
+	for d1 in dict1_2:
 	    taxid = d1.get('taxid')
 	    if taxid in dict2_map:
 	        merged_dict = {**d1, **dict2_map[taxid]}
