@@ -49,19 +49,33 @@ def make_genom(taxid, size,gc, status):
 
 Genomes = {}
 with open("genomes/eukaryotes.txt", "r") as f:
+    header=f.readline().strip().split('\t');
+    index0 = header.index("TaxID")
+    index1 = header.index("Size (Mb)")
+    index2 = header.index("GC%")
+    index3 = header.index("Status")
     for line in f:
         temp = line.split('\t')
-        if temp[1] in Genomes:
-            Genomes[temp[1]].append(temp[1], temp[6], temp[7], temp[18])
-        else:
-            Genomes.update({temp[1]:genom(temp[1], temp[6], temp[7], temp[18])})
+	if len(temp) > index3:
+#		print temp[index0] + ' ' + temp[index1] + ' ' + temp[index2] + ' ' + temp[index3]
+		if temp[index0] in Genomes:
+	            Genomes[temp[index0]].append(temp[index0], temp[index1], temp[index2], temp[index3])
+	        else:
+	            Genomes.update({temp[index0]:genom(temp[index0], temp[index1], temp[index2], temp[index3])})
 with open("genomes/prokaryotes.txt", "r") as f:
+    header=f.readline().strip().split('\t');
+    index0 = header.index("TaxID")
+    index1 = header.index("Size (Mb)")
+    index2 = header.index("GC%")
+    index3 = header.index("Status")
     for line in f:
         temp = line.split('\t')
-        if temp[1] in Genomes:
-            Genomes[temp[1]].append(temp[1], temp[6], temp[7], temp[18])
-        else:
-            Genomes.update({temp[1]:genom(temp[1], temp[6], temp[7], temp[18])})
+	if len(temp) > index3:
+#               print temp[index0] + ' ' + temp[index1] + ' ' + temp[index2] + ' ' + temp[index3]
+               if temp[index0] in Genomes:
+                    Genomes[temp[index0]].append(temp[index0], temp[index1], temp[index2], temp[index3])
+               else:
+                    Genomes.update({temp[index0]:genom(temp[index0], temp[index1], temp[index2], temp[index3])})
 
 
 ##traverse first time:
@@ -72,7 +86,9 @@ for n in t.traverse():
     except AttributeError:
         n.nbgenomes = 0
     if n.taxid in Genomes:
-        nb = len(Genomes[n.taxid].gc)
+	nb = len([cpl for cpl in Genomes[n.taxid].status if cpl=="Complete Genome"])
+#	print nb
+#        nb = len(Genomes[n.taxid].gc)
         try:
             n.nbgenomes += nb
         except AttributeError:
