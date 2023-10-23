@@ -8,7 +8,7 @@ def MergeJsons(f1,f2, output):
 	    data1 = f.read()
 	# Here we add a control for the unexpected problem of a "}," being present sometimes
 	# at the end of the TreeFeatures2.json file.
-	lines = data.split('\n')
+	lines = data1.split('\n')
 	if lines[-4].find("},") != -1:
 	    lines.pop(-4)
 	    data1 = '\n'.join(lines)
