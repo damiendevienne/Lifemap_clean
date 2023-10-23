@@ -16,14 +16,8 @@ class(DF$zoom)<-"integer"
 class(DF$lat)<-"numeric"
 class(DF$lon)<-"numeric"
 
-print ("Create folder /var/www/html/data for data sharing")
-system ("mkdir /var/www/html/data")
-
-print ("Remove old data (if any)...")
-system ("rm /var/www/html/data/*")
-
 print ("Saving dataframe to binary file lmdata.Rdata...")
-save(DF, file='/var/www/html/data/lmdata.Rdata')
+save(DF, file='lmdata.Rdata')
 
 print ("Done.")
 
