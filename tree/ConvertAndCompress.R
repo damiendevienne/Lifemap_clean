@@ -22,7 +22,7 @@ system ("mkdir /var/www/html/data")
 print ("Remove old data (if any)...")
 system ("rm /var/www/html/data/*")
 
-print ("Saving dataframe to binary file lmdata.Rdata..."
+print ("Saving dataframe to binary file lmdata.Rdata...")
 save(DF, file='/var/www/html/data/lmdata.Rdata')
 
 print ("Done.")
