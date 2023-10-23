@@ -51,6 +51,11 @@ print '  Merging jsons...'
 os.system('python3 CombineJsons.py')
 print '  ...Done ' 
 
+## 2.3.1. Write whole data to Rdada file for use in R package LifemapR (among others)
+
+print '  Converting json to Rdata for light data sharing...'
+os.system('Rscript ConvertAndCompress.R')
+print '  ...Done '
 
 ## 3. Update Solr informations
 print '  Updating Solr... '
